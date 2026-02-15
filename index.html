@@ -1,0 +1,2756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>ZERO_POINT | Cloud OS Pro</title>
+
+    <script>
+        (function () {
+            const _wipe = () => {
+                window.stop();
+                try {
+                    document.documentElement.innerHTML = '';
+                    document.body.innerHTML = '';
+                    document.write('<div style="background:#000;color:#f00;height:100vh;display:flex;align-items:center;justify-content:center;font-family:monospace;text-align:center;padding:20px;"><h1>☢ ULTIMATE SECURITY LOCKDOWN ☢</h1><p>UNAUTHORIZED INSPECTION DETECTED. ACCESS DATA PURGED.</p></div>');
+                    localStorage.clear(); sessionStorage.clear();
+                } catch (e) { }
+                window.location.replace('about:blank');
+            };
+
+            const _forbidden = [123, 85, 83, 80, 70, 71, 76, 73, 74, 117];
+            const _hook = (e) => {
+                const _c = e.ctrlKey || e.metaKey;
+                const _k = e.keyCode || e.which;
+                if (_k === 123 || (_c && _forbidden.includes(_k))) {
+                    e.preventDefault(); e.stopPropagation();
+                    _wipe();
+                    return false;
+                }
+            };
+            ['keydown', 'keyup', 'keypress'].forEach(t => window.addEventListener(t, _hook, true));
+
+            new MutationObserver((m) => {
+                m.forEach((n) => {
+                    if (n.removedNodes.length > 0) n.removedNodes.forEach((o) => {
+                        if (['SCRIPT', 'STYLE'].includes(o.tagName)) _wipe();
+                    });
+                });
+            }).observe(document.documentElement, { childList: true, subtree: true });
+
+            setInterval(() => {
+                const s = performance.now(); debugger;
+                if (performance.now() - s > 50) _wipe();
+            }, 250);
+
+            document.addEventListener('contextmenu', e => e.preventDefault(), true);
+            window.onblur = () => { console.clear(); };
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ext-language_tools.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ext-searchbox.min.js"></script>
+
+    <style>
+        /* --- PROFESSIONAL DESIGN SYSTEM (HSL) --- */
+        :root {
+            --hue-brand: 220;
+            --hue-accent: 150;
+            --hue-danger: 0;
+            --bg-body: hsl(220, 20%, 8%);
+            --bg-sidebar: hsl(220, 20%, 10%);
+            --bg-panel: hsl(220, 18%, 13%);
+            --bg-card: hsl(220, 15%, 16%);
+            --bg-glass: hsla(220, 20%, 10%, 0.95);
+            --border-subtle: hsla(220, 20%, 90%, 0.08);
+            --border-strong: hsla(220, 20%, 90%, 0.15);
+            --primary: hsl(220, 90%, 60%);
+            --primary-glow: hsla(220, 90%, 60%, 0.3);
+            --primary-dark: hsl(220, 90%, 45%);
+            --accent: hsl(150, 70%, 45%);
+            --danger: hsl(0, 80%, 60%);
+            --text-main: hsl(0, 0%, 95%);
+            --text-secondary: hsl(220, 10%, 75%);
+            --text-muted: hsl(220, 10%, 50%);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 20px var(--primary-glow);
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            --trans-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --trans-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.light-mode {
+            --bg-body: hsl(220, 20%, 97%);
+            --bg-sidebar: hsl(0, 0%, 100%);
+            --bg-panel: hsl(0, 0%, 100%);
+            --bg-card: hsl(0, 0%, 100%);
+            --bg-glass: hsla(0, 0%, 100%, 0.9);
+            --border-subtle: hsla(220, 20%, 10%, 0.08);
+            --border-strong: hsla(220, 20%, 10%, 0.12);
+            --text-main: hsl(220, 20%, 15%);
+            --text-secondary: hsl(220, 15%, 35%);
+            --text-muted: hsl(220, 10%, 55%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            background-image: radial-gradient(circle at 10% 20%, hsla(220, 50%, 20%, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, hsla(220, 50%, 20%, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+            transition: background-color var(--trans-smooth),
+                color var(--trans-smooth);
+            font-size: 15px;
+            line-height: 1.5;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+        }
+
+        img {
+            pointer-events: none !important;
+            user-select: none !important;
+        }
+
+        ::selection {
+            background: rgba(30, 144, 255, 0.4);
+            color: #fff;
+        }
+
+        ::-moz-selection {
+            background: rgba(30, 144, 255, 0.4);
+            color: #fff;
+        }
+
+        .ace_selection {
+            background: rgba(30, 144, 255, 0.4) !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 99px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-body);
+            z-index: 20000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+
+        #loading-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .battery-loader {
+            width: 80px;
+            height: 40px;
+            border: 3px solid #2ecc71;
+            border-radius: 5px;
+            position: relative;
+            padding: 4px;
+            box-sizing: border-box;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .battery-loader::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 16px;
+            background: #2ecc71;
+            border-radius: 0 3px 3px 0;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.2);
+        }
+
+        .battery-loader::before {
+            content: "";
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.6);
+            border-radius: 2px;
+            animation: fastCharge 1.5s infinite ease-in-out;
+        }
+
+        @keyframes fastCharge {
+            0% {
+                width: 0%;
+            }
+
+            50% {
+                width: 100%;
+            }
+
+            100% {
+                width: 100%;
+                opacity: 0;
+            }
+        }
+
+        #auth-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: var(--bg-body);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle at center, hsla(220, 90%, 30%, 0.1) 0%, transparent 70%);
+        }
+
+        .auth-card {
+            background: var(--bg-panel);
+            padding: 3rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-strong);
+            backdrop-filter: blur(20px);
+        }
+
+        .auth-logo {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-body);
+            padding: 5px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: var(--trans-fast);
+            border: 1px solid transparent;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-panel);
+            color: var(--primary);
+            border-color: var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+        }
+
+        #app-root {
+            display: none;
+            height: 100vh;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #app-root.visible {
+            opacity: 1;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            z-index: 50;
+            transition: transform var(--trans-smooth);
+        }
+
+        .brand-section {
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .brand-text {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-section {
+            padding: 0 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .nav-static {
+            flex-shrink: 0;
+        }
+
+        .nav-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .nav-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .nav-scroll::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+            border-radius: 4px;
+        }
+
+        .nav-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .nav-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 24px 8px 12px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--trans-fast);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: visible;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .nav-item.active {
+            background: rgba(88, 101, 242, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .folder-menu-btn {
+            margin-left: auto;
+            opacity: 0;
+            transition: opacity 0.2s;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .nav-item:hover .folder-menu-btn {
+            opacity: 1;
+        }
+
+        .folder-menu-btn:hover {
+            background: var(--border-subtle);
+            color: var(--text-main);
+        }
+
+        .ctx-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            right: 0;
+            width: 180px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transform-origin: top right;
+        }
+
+        .ctx-menu.show {
+            display: flex;
+            animation: menuFadeIn 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes menuFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .ctx-item {
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .ctx-item:hover {
+            background: var(--bg-card);
+        }
+
+        .ctx-item.danger {
+            color: var(--danger);
+        }
+
+        .ctx-item.danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .bottom-actions {
+            padding: 16px;
+            border-top: 1px solid var(--border-subtle);
+            background: var(--bg-sidebar);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .top-header {
+            height: var(--header-height);
+            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            z-index: 40;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            color: var(--text-main);
+            transition: var(--trans-fast);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background: var(--bg-body);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .mobile-search-btn {
+            display: none;
+        }
+
+        #mobile-search-overlay {
+            position: absolute;
+            top: var(--header-height);
+            left: 0;
+            width: 100%;
+            background: var(--bg-glass);
+            padding: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            backdrop-filter: blur(12px);
+            z-index: 35;
+            display: none;
+            animation: slideDown 0.2s var(--trans-fast);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #mobile-search-overlay {
+            animation: none;
+            transition: none;
+        }
+
+        .view-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 24px;
+        }
+
+        .file-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--trans-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--item-color, var(--primary));
+            box-shadow: 0 8px 25px color-mix(in srgb, var(--item-color, var(--primary)), transparent 60%);
+        }
+
+        .file-icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+        }
+
+        .file-card[data-type="code"] .file-icon-box {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .file-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .file-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .btn-primary:hover {
+            opacity: 1;
+            box-shadow: none;
+            transform: none;
+            filter: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-strong);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--border-subtle);
+            border-color: var(--text-muted);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-strong);
+            color: var(--text-main);
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+        }
+
+        .input-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--bg-panel);
+            width: 90%;
+            max-width: 500px;
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.show .modal-box {
+            transform: scale(1);
+        }
+
+        .code-viewer {
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            background: #0d1117;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #ace-editor-instance {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ace_scrollbar::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        .ace_scrollbar::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        .ace_scrollbar::-webkit-scrollbar-thumb {
+            background: var(--border-strong);
+            border-radius: 5px;
+        }
+
+        .ace_scrollbar::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        .toast {
+            background: var(--bg-panel);
+            color: var(--text-main);
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            transform: translateX(100%);
+            animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--primary);
+        }
+
+        .toast.hide {
+            animation: slideOutToast 0.3s ease-in forwards;
+        }
+
+        @keyframes slideInToast {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutToast {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        #live-env {
+            position: fixed;
+            inset: 0;
+            background: #111;
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+        }
+
+        .color-option {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: var(--text-main);
+            transform: scale(1.1);
+        }
+
+        .runner-toolbar {
+            height: 60px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+            z-index: 100;
+        }
+
+        .runner-container {
+            flex: 1;
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+            background: #0a0a0a;
+            overflow: auto;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .runner-frame-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .device-label {
+            color: #555;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        .iphone-frame {
+            width: 430px;
+            height: 932px;
+            border-radius: 60px;
+            border: 12px solid #1f1f1f;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 255, 255, 0.05);
+            transform-origin: top center;
+            transform: scale(0.8);
+            margin-bottom: -150px;
+        }
+
+        .iphone-notch {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 34px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 200;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #frame-mobile {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .desktop-frame {
+            width: 1000px;
+            height: 700px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            border: 1px solid #333;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform-origin: top center;
+            transform: scale(0.8);
+            margin-bottom: -120px;
+            transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .desktop-frame.fullscreen {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10001;
+            border-radius: 0;
+            transform: none;
+            margin: 0;
+        }
+
+        .desktop-header {
+            height: 40px;
+            background: #2a2a2a;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 12px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot-wrap {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot.red {
+            background: #ff5f56;
+        }
+
+        .dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .dot.green {
+            background: #27c93f;
+        }
+
+        .browser-address {
+            flex: 1;
+            height: 24px;
+            background: #111;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        #frame-desktop {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--trans-smooth);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card::before {
+            display: none;
+        }
+
+        .stat-card.users {
+            color: #6366f1;
+            background: linear-gradient(145deg, rgba(99, 102, 241, 0.1), transparent);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-card.files {
+            color: #10b981;
+            background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), transparent);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .stat-card.projects {
+            color: #f59e0b;
+            background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), transparent);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .admin-table-container {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table thead {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .admin-table th {
+            padding: 16px;
+            text-align: left;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .admin-table td {
+            padding: 16px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        .admin-table tbody tr {
+            border-bottom: 1px solid var(--border-subtle);
+            transition: background 0.2s;
+        }
+
+        .admin-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .admin-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .stat-val {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-icon-bg {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 8rem;
+            opacity: 0.05;
+            color: currentColor;
+            transform: rotate(-15deg);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            width: 48px;
+            height: 26px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-subtle);
+            border-radius: 99px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .light-mode .theme-toggle::after {
+            transform: translateX(22px);
+            background: #fbbf24;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                height: 100%;
+                box-shadow: 50px 0 100px rgba(0, 0, 0, 0.5);
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .top-header {
+                padding: 0 16px;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .mobile-search-btn {
+                display: flex;
+            }
+
+            .runner-container {
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 40px;
+            }
+
+            .iphone-frame {
+                transform-origin: top center;
+                transform: scale(0.7);
+                margin-bottom: -150px;
+            }
+
+            .desktop-frame {
+                width: 100%;
+                height: 350px;
+            }
+        }
+
+        .folder-menu-btn {
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--text-muted);
+            opacity: 0.6;
+            transition: 0.2s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-item:hover .folder-menu-btn {
+            opacity: 1;
+            color: var(--text-main);
+        }
+
+        .folder-menu-btn:hover {
+            background: var(--bg-body);
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        .ctx-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            min-width: 120px;
+            display: none;
+            padding: 4px;
+        }
+
+        .ctx-menu.show {
+            display: block;
+        }
+
+        .ctx-item {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .ctx-item:hover {
+            background: var(--bg-card);
+            color: var(--primary);
+        }
+
+        .ctx-item.danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .nav-item {
+            display: grid;
+            grid-template-columns: 24px 1fr auto;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            margin-bottom: 4px;
+        }
+
+        .file-card {
+            position: relative;
+            overflow: visible !important;
+        }
+
+        .folder-card {
+            background: rgba(var(--primary-rgb), 0.05);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .card-menu-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .file-card:hover .card-menu-btn {
+            opacity: 1;
+        }
+
+        .card-menu-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .card-ctx-menu {
+            position: absolute;
+            top: 32px;
+            right: 8px;
+            width: 160px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .card-ctx-menu.show {
+            display: flex;
+            animation: menuFadeIn 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .iphone-frame {
+            width: 430px;
+            height: 932px;
+            border-radius: 55px;
+            border: 8px solid #1a1a1a;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.6), inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+            transform-origin: top center;
+            transform: scale(0.85);
+        }
+
+        .iphone-notch {
+            position: absolute;
+            top: 11px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 126px;
+            height: 37px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 200;
+            transition: 0.3s;
+        }
+
+        .iphone-notch:hover {
+            width: 160px;
+            height: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .runner-toolbar {
+                height: auto;
+                padding: 12px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .runner-container {
+                padding: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .iphone-frame {
+                transform: scale(0.6);
+                margin-bottom: -350px;
+            }
+
+            .desktop-frame {
+                width: 100%;
+                height: 400px;
+                transform: scale(1);
+                margin-bottom: 0;
+            }
+        }
+
+        .btn-label {
+            display: none;
+        }
+
+        @media (min-width: 600px) {
+            .btn-label {
+                display: inline;
+            }
+        }
+
+        .btn-pin {
+            background: transparent;
+            border: 1px solid var(--border-strong);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--trans-fast);
+        }
+
+        .btn-pin.active {
+            color: #fbbf24;
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        body.light-mode .btn-pin.active {
+            color: #ef4444;
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .pinned-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.7rem;
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        body.light-mode .pinned-badge {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="battery-loader"></div>
+        <div
+            style="margin-top: 20px; font-family: 'JetBrains Mono', monospace; color: #2ecc71; font-size: 0.8rem; letter-spacing: 2px;">
+            SYSTEM INITIALIZING</div>
+    </div>
+
+    <div id="auth-screen">
+        <div class="auth-card">
+            <h1 class="auth-logo">PC<sub>3</sub></h1>
+            <p class="auth-subtitle">"Personal Cloud Command Center"</p>
+            <div class="auth-tabs">
+                <div class="tab-btn active" onclick="switchAuthMode('login')">Sign In</div>
+                <div class="tab-btn" onclick="switchAuthMode('register')">New Account</div>
+            </div>
+            <div id="form-login">
+                <input type="text" id="log-email" class="input-box" placeholder="Access ID / Email">
+                <input type="password" id="log-pass" class="input-box" placeholder="Secure Password">
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;"
+                    onclick="doLogin()">Initialize Session <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div id="form-register" class="hidden">
+                <input type="text" id="reg-name" class="input-box" placeholder="Full Display Name">
+                <input type="email" id="reg-email" class="input-box" placeholder="Email Address">
+                <input type="password" id="reg-pass" class="input-box" placeholder="Create Password">
+                <button class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;"
+                    onclick="doRegister()">Create System ID</button>
+            </div>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.8rem; color: var(--text-muted); opacity: 0.6;">SECURE ENCRYPTED
+            CONNECTION</p>
+    </div>
+
+    <div id="app-root">
+        <aside class="sidebar" id="main-sidebar">
+            <div class="brand-section">
+                <div class="brand-text"><i class="fas fa-cube brand-icon"></i> PC-3</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-static">
+                    <div id="nav-admin-dash" class="nav-item hidden" onclick="openAdminDashboard()">
+                        <div style="display:flex; align-items:center;"><i class="fas fa-tachometer-alt"></i><span>Admin
+                                Panel</span></div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center; margin: 24px 0 12px;"
+                        onclick="modalOpen('create-folder')">
+                        <i class="fas fa-plus-circle"></i> New Project
+                    </button>
+
+                    <div class="nav-label">Projects</div>
+
+                    <div id="static-dashboard"></div>
+                    <div style="height: 1px; background: var(--border-subtle); margin: 8px 0;"></div>
+                </div>
+
+                <div class="nav-scroll">
+                    <div id="folder-container"></div>
+                </div>
+            </div>
+            <div class="bottom-actions">
+                <div class="flex-between">
+                    <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Dark Mode</span>
+                    <div class="theme-toggle" onclick="toggleTheme()"></div>
+                </div>
+                <div onclick="logout()"
+                    style="margin-top: 16px; color: var(--danger); cursor: pointer; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-power-off"></i> Terminate Session
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <button class="btn btn-outline" style="border:none; padding: 8px;" onclick="toggleSidebarMobile()">
+                        <i class="fas fa-bars" style="font-size: 1.2rem;"></i>
+                    </button>
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="global-search" placeholder="Search files, code, resources..."
+                            onkeyup="filterItems('global-search')">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button class="btn btn-outline mobile-search-btn" style="border:none; padding: 8px;"
+                        onclick="toggleMobileSearch()">
+                        <i class="fas fa-search" style="font-size: 1.1rem;"></i>
+                    </button>
+
+                    <button class="btn btn-primary" onclick="modalOpen('create-folder')" style="margin-right: 8px;">
+                        <i class="fas fa-folder-plus"></i> <span class="btn-label">New Folder</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="modalOpen('upload')">
+                        <i class="fas fa-cloud-upload"></i> <span class="btn-label">Upload</span>
+                    </button>
+                </div>
+            </header>
+
+            <div id="mobile-search-overlay">
+                <div class="input-box" style="display:flex; align-items:center; margin-bottom:0; padding: 8px 12px;">
+                    <i class="fas fa-search" style="color:var(--text-muted); margin-right:10px;"></i>
+                    <input type="text" id="mobile-search-input" placeholder="Search everywhere..."
+                        style="background:transparent; border:none; color:var(--text-main); flex:1; outline:none;"
+                        onkeyup="filterItems('mobile-search-input')">
+                    <i class="fas fa-times" onclick="toggleMobileSearch()"
+                        style="color:var(--text-muted); padding:4px;"></i>
+                </div>
+            </div>
+
+            <div class="view-content" id="content-area">
+                <div id="std-view-container">
+                    <div class="flex-between" style="margin-bottom: 30px;">
+                        <div>
+                            <h2 class="header-title" id="page-title">Dashboard</h2>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;" id="page-subtitle">
+                                Manage your cloud resources</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span id="item-counter"
+                                style="background: var(--bg-card); padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 0.8rem; font-weight: 600;">0
+                                Items</span>
+                        </div>
+                    </div>
+                    <div id="file-grid-container" class="grid-layout"></div>
+                </div>
+
+                <div id="admin-view-container" class="hidden">
+                    <div class="flex-between" style="margin-bottom: 24px;">
+                        <h2 class="header-title">System Control Center</h2>
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn btn-danger" onclick="adminResetAll()"><i class="fas fa-bomb"></i> GLOBAL
+                                RESET</button>
+                            <button class="btn btn-outline" onclick="renderAdminDashboard()"><i class="fas fa-sync"></i>
+                                Refresh</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 24px; margin-bottom: 32px; flex-wrap: wrap;">
+                        <div class="stat-card users">
+                            <i class="fas fa-users stat-icon-bg"></i>
+                            <span class="stat-val" id="stat-users">0</span>
+                            <span class="stat-label">Total Users</span>
+                        </div>
+                        <div class="stat-card files">
+                            <i class="fas fa-file-code stat-icon-bg"></i>
+                            <span class="stat-val" id="stat-files">0</span>
+                            <span class="stat-label">Total Files</span>
+                        </div>
+                        <div class="stat-card projects">
+                            <i class="fas fa-folder-open stat-icon-bg"></i>
+                            <span class="stat-val" id="stat-folders">0</span>
+                            <span class="stat-label">Active Projects</span>
+                        </div>
+                    </div>
+                    <h3 style="margin-bottom: 16px;">User Management</h3>
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Credentials</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-user-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-create-folder" class="modal-overlay">
+        <div class="modal-box">
+            <h3 style="margin-bottom: 20px;">Create New Project</h3>
+            <input type="text" id="new-folder-input" class="input-box" placeholder="Project Name (e.g., Web App V2)">
+            <div class="flex-between" style="margin-top: 24px;">
+                <button class="btn btn-outline" onclick="modalClose()">Cancel</button>
+                <button class="btn btn-primary" onclick="execCreateFolder()">Create Project</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-upload" class="modal-overlay">
+        <div class="modal-box" style="max-width: 600px;">
+            <div class="flex-between" style="margin-bottom: 20px;">
+                <h3 style="margin:0;">Add Resource</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                <select id="res-type" class="input-box" onchange="toggleUploadFields()">
+                    <option value="code">Source Code Snippet</option>
+                    <option value="link">External Link</option>
+                    <option value="file">Local File Asset</option>
+                </select>
+                <select id="res-lang" class="input-box">
+                    <option value="javascript">JavaScript</option>
+                    <option value="typescript">TypeScript</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="c_cpp">C / C++</option>
+                    <option value="csharp">C#</option>
+                    <option value="golang">Go</option>
+                    <option value="rust">Rust</option>
+                    <option value="php">PHP</option>
+                    <option value="ruby">Ruby</option>
+                    <option value="swift">Swift</option>
+                    <option value="kotlin">Kotlin</option>
+                    <option value="sql">SQL</option>
+                    <option value="sh">Bash / Shell</option>
+                    <option value="json">JSON</option>
+                    <option value="yaml">YAML</option>
+                    <option value="xml">XML</option>
+                    <option value="markdown">Markdown</option>
+                    <option value="dockerfile">Dockerfile</option>
+                </select>
+            </div>
+            <input type="text" id="res-name" class="input-box" placeholder="Resource Name">
+            <div id="field-code" style="margin-bottom: 16px;">
+                <textarea id="res-content-code" class="input-box"
+                    style="min-height: 200px; font-family: 'JetBrains Mono', monospace; font-size: 13px;"
+                    placeholder="// Paste code here..."></textarea>
+            </div>
+            <div id="field-link" class="hidden" style="margin-bottom: 16px;"><input type="text" id="res-content-link"
+                    class="input-box" placeholder="https://..."></div>
+            <div id="field-file" class="hidden" style="margin-bottom: 16px;">
+                <div
+                    style="border: 2px dashed var(--border-strong); padding: 40px; text-align: center; border-radius: var(--radius-md); color: var(--text-muted);">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; margin-bottom: 12px;"></i><br>
+                    <input type="file" id="res-file-obj" style="display: inline-block;">
+                </div>
+            </div>
+            <div class="flex-between">
+                <button class="btn btn-outline" onclick="modalClose()">Discard</button>
+                <button class="btn btn-primary" onclick="execSaveItem()">Save Resource</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-viewer" class="modal-overlay">
+        <div class="modal-box"
+            style="max-width: 1000px; width: 95%; height: 90vh; display: flex; flex-direction: column;">
+            <div class="flex-between"
+                style="padding-bottom: 16px; border-bottom: 1px solid var(--border-strong); margin-bottom: 16px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <h3 id="view-title" style="margin:0;">script.js</h3>
+                    <span id="view-badge"
+                        style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">JS</span>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-outline" id="btn-search" onclick="triggerEditorSearch()"><i
+                            class="fas fa-search"></i> Find</button>
+                    <button class="btn btn-outline" id="btn-edit" onclick="toggleEdit()"><i class="fas fa-edit"></i>
+                        Edit</button>
+                    <button class="btn btn-primary" id="btn-run" onclick="execRun()"><i class="fas fa-play"></i>
+                        Run</button>
+                    <button class="btn btn-outline" onclick="modalClose()"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div id="viewer-body" style="flex: 1; overflow: hidden; position: relative;">
+                <div id="view-code-wrap" class="code-viewer" style="height: 100%;">
+                    <div id="ace-editor-instance"></div>
+                </div>
+                <div id="view-media-wrap" class="hidden"
+                    style="height: 100%; display: flex; center; justify-content: center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="live-env">
+        <div class="runner-toolbar">
+            <div style="font-weight: 800; letter-spacing: 1px; color: #fff;">DEV PREVIEW</div>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-outline" style="padding: 6px 16px;" onclick="toggleFrame('all')">Split</button>
+                <button class="btn btn-outline" style="padding: 6px 16px;"
+                    onclick="toggleFrame('mobile')">Mobile</button>
+                <button class="btn btn-outline" style="padding: 6px 16px;"
+                    onclick="toggleFrame('desktop')">Desktop</button>
+                <button class="btn btn-danger" style="padding: 6px 16px;" onclick="closeLiveEnv()">Close</button>
+            </div>
+        </div>
+        <div class="runner-container">
+            <div class="runner-frame-wrapper" id="wrap-mobile">
+                <div class="device-label">iPhone 17 Pro Max</div>
+                <div class="iphone-frame">
+                    <div class="iphone-notch"></div>
+                    <div class="screen">
+                        <iframe id="frame-mobile"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="runner-frame-wrapper" id="wrap-desktop">
+                <div class="device-label">Desktop View</div>
+                <div class="desktop-frame" id="d-frame-box">
+                    <div class="desktop-header">
+                        <div class="dot-wrap">
+                            <div class="dot red" onclick="closeLiveEnv()" style="cursor:pointer;"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green" onclick="toggleFullscreenDesktop()" style="cursor:pointer;"></div>
+                        </div>
+                        <div class="browser-address">localhost:3000</div>
+                        <div style="color: #666; font-size: 0.8rem; cursor: pointer;"
+                            onclick="toggleFullscreenDesktop()">
+                            <i class="fas fa-expand-alt"></i>
+                        </div>
+                    </div>
+                    <iframe id="frame-desktop"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column-reverse; gap: 10px;">
+    </div>
+
+    <div id="modal-confirm" class="modal-overlay">
+        <div class="modal-box" style="max-width: 350px; text-align: center; border: 1px solid var(--border-strong);">
+            <div style="margin-bottom: 20px;">
+                <div
+                    style="width: 60px; height: 60px; border-radius: 50%; background: var(--bg-body); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid var(--border-subtle);">
+                    <i class="fas fa-question" style="font-size: 1.5rem; color: var(--primary);"></i>
+                </div>
+                <h3 id="confirm-msg" style="margin-bottom: 8px;">Are you sure?</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">This action cannot be undone.</p>
+            </div>
+            <div class="flex-between" style="justify-content: center; gap: 12px;">
+                <button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-primary" id="btn-do-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-session-timer" class="modal-overlay" style="z-index: 11000; backdrop-filter: blur(5px);">
+        <div class="modal-box"
+            style="max-width: 400px; text-align: center; border: 1px solid var(--border-strong); background: var(--bg-card); padding: 32px;">
+            <div style="margin-bottom: 24px;">
+                <div
+                    style="width: 70px; height: 70px; border-radius: 50%; background: rgba(99, 102, 241, 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                    <i class="fas fa-hourglass-half" style="font-size: 2rem; color: #6366f1;"></i>
+                </div>
+                <h3 style="margin-bottom: 12px; font-size: 1.5rem; letter-spacing: -0.5px;">Session Security</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                    Set a duration for this session. The system will automatically log you out when time expires to
+                    ensure security.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 24px; text-align: left;">
+                <label
+                    style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Duration
+                    (Minutes)</label>
+                <div style="position: relative;">
+                    <input type="number" id="session-minutes" class="input-box" value="30" min="1" max="1440"
+                        style="padding-left: 16px; font-size: 1.1rem; font-weight: 600; color: var(--text-main); border: 2px solid var(--border-subtle); height: 50px;">
+                    <span
+                        style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.8rem; font-weight: 600;">MINUTES</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="confirmSessionStart()"
+                style="width: 100%; padding: 14px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; border-radius: 12px;">
+                Start Session <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="modal-folder-settings" class="modal-overlay">
+        <div class="modal-box">
+            <div class="flex-between" style="margin-bottom: 20px;">
+                <h3 id="settings-modal-title" style="margin:0;">Project Settings</h3>
+                <button id="modal-pin-btn" class="btn-pin" onclick="togglePin()">
+                    <i class="fas fa-thumbtack"></i>
+                </button>
+            </div>
+            <label
+                style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; display: block;">NAME</label>
+            <input type="text" id="folder-name-input" class="input-box" placeholder="Name">
+
+            <label id="lbl-folder-color"
+                style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; display: block; margin-top: 20px;">PROJECT
+                COLOR</label>
+            <div id="folder-color-grid" style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
+                <div class="color-option" style="background:var(--primary);"
+                    onclick="selectFolderColor('var(--primary)', this)"></div>
+                <div class="color-option" style="background:#ef4444;" onclick="selectFolderColor('#ef4444', this)">
+                </div>
+                <div class="color-option" style="background:#f59e0b;" onclick="selectFolderColor('#f59e0b', this)">
+                </div>
+                <div class="color-option" style="background:#10b981;" onclick="selectFolderColor('#10b981', this)">
+                </div>
+                <div class="color-option" style="background:#ec4899;" onclick="selectFolderColor('#ec4899', this)">
+                </div>
+                <div class="color-option" style="background:#8b5cf6;" onclick="selectFolderColor('#8b5cf6', this)">
+                </div>
+                <div class="color-option" style="background:#6366f1;" onclick="selectFolderColor('#6366f1', this)">
+                </div>
+                <div class="color-option" style="background:#64748b;" onclick="selectFolderColor('#64748b', this)">
+                </div>
+            </div>
+            <input type="hidden" id="folder-color-input">
+
+            <div class="flex-between" style="margin-top: 32px;">
+                <button class="btn btn-outline" onclick="modalClose()">Cancel</button>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn" style="background:var(--danger); color:white; border:none;"
+                        onclick="execDeleteFromSettings()">Delete</button>
+                    <button class="btn btn-primary" onclick="execSaveFolderSettings()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsPuncnbt-DKjRFBET8OELhXkPYKRbftA",
+            authDomain: "pc-3-421c3.firebaseapp.com",
+            databaseURL: "https://pc-3-421c3-default-rtdb.firebaseio.com",
+            projectId: "pc-3-421c3",
+            storageBucket: "pc-3-421c3.firebasestorage.app",
+            messagingSenderId: "1712739143",
+            appId: "1:1712739143:web:c963029d9e7e2cded57262",
+            measurementId: "G-Z6ZRLS17Y3"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+    </script>
+    <script>
+        function execDeleteFromSettings() {
+            const id = appState.renameTargetId;
+            if (!id) return;
+
+            // Explicitly close ONLY the settings modal to avoid closing the subsequent confirm modal
+            const settingsModal = document.getElementById('modal-folder-settings');
+            settingsModal.classList.remove('show');
+            setTimeout(() => settingsModal.style.display = 'none', 300);
+
+            // Small delay to allow transition before showing confirm
+            setTimeout(() => {
+                const isFolder = appState.folders.find(f => f.id == id);
+                if (isFolder) {
+                    execDeleteFolder(id);
+                } else {
+                    deleteFile(id, { stopPropagation: () => { } });
+                }
+            }, 100);
+        }
+        /* --- CORE CONFIG --- */
+        const ADMIN_EMAIL = "teacher20189@gmail.com";
+        const ADMIN_PASS = "teacher20189@gmail.com";
+        let editor;
+        let appState = {
+            user: null, viewingAs: null,
+            folders: [], files: [], users: [],
+            currentFolderId: 'root', currentFile: null, editing: false, renameTargetId: null
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            checkTheme();
+            initAce();
+        });
+
+        function initAce() {
+            ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/');
+            editor = ace.edit("ace-editor-instance");
+            editor.setTheme("ace/theme/tomorrow_night");
+            editor.getSession().setMode("ace/mode/javascript");
+            editor.setShowPrintMargin(false);
+            editor.setReadOnly(true);
+            editor.setOptions({
+                enableBasicAutocompletion: true, enableLiveAutocompletion: true
+            });
+        }
+
+        function loadData() {
+            const _defaults = {
+                folders: [{ id: 'root', name: 'Dashboard', icon: 'fa-home', owner: 'system' }],
+                files: [],
+                users: []
+            };
+
+            // TRY FIREBASE CONNECTION
+            try {
+                if (typeof db !== 'undefined') {
+                    db.ref('folders').on('value', s => {
+                        appState.folders = s.val() || _defaults.folders;
+                        renderSidebar();
+                        if (document.getElementById('app-root').style.display === 'flex') {
+                            const current = appState.currentFolderId || 'root';
+                            openFolder(current);
+                        }
+                    });
+
+                    db.ref('files').on('value', s => {
+                        appState.files = s.val() || _defaults.files;
+                        if (document.getElementById('app-root').style.display === 'flex') {
+                            const current = appState.currentFolderId || 'root';
+                            openFolder(current);
+                        }
+                    });
+
+                    db.ref('users').on('value', s => {
+                        appState.users = s.val() || _defaults.users;
+                        if (appState.user) {
+                            const freshUser = appState.users.find(u => u.email === appState.user.email);
+                            if (freshUser && freshUser.banned) logout();
+                        }
+                        if (document.getElementById('admin-panel') && document.getElementById('admin-panel').style.display === 'flex') {
+                            renderAdmin();
+                        }
+                    });
+                } else {
+                    console.warn("Firebase DB not initialized. Falling back to local/default.");
+                    throw new Error("Firebase Offline");
+                }
+            } catch (e) {
+                console.error("Data Load Error:", e);
+                // Fallback or just allow app to load with defaults/local if needed
+                // For now, we proceed so user isn't stuck.
+            }
+
+            // Hide Loader after animation (Sequential Reveal) - MOVED OUTSIDE TRY/CATCH to ensure execution
+            setTimeout(() => {
+                // Ensure Dashboard always exists
+                if (!appState.folders.find(f => f.id === 'root')) {
+                    appState.folders.unshift({ id: 'root', name: 'Dashboard', icon: 'fa-home', owner: 'system' });
+                }
+
+                const loader = document.getElementById('loading-screen');
+                if (loader) {
+                    loader.classList.add('fade-out');
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }
+
+                // Check Session AFTER loader logic
+                const storedUser = JSON.parse(localStorage.getItem('zp_current_user'));
+                if (storedUser) {
+                    appState.user = storedUser;
+                    appState.viewingAs = storedUser.email;
+
+                    const expiry = localStorage.getItem('zp_session_expiry');
+                    if (expiry && Date.now() < parseInt(expiry)) {
+                        startSessionMonitor();
+                        launchApp();
+                    } else if (expiry && Date.now() > parseInt(expiry)) {
+                        localStorage.removeItem('zp_current_user');
+                        localStorage.removeItem('zp_session_expiry');
+                        location.reload();
+                    } else {
+                        showSessionTimer();
+                    }
+                } else {
+                    document.getElementById('auth-screen').style.display = 'flex';
+                }
+            }, 1500);
+        }
+        function saveData() {
+            // FIREBASE SAVE
+            if (typeof db !== 'undefined') {
+                db.ref('folders').set(appState.folders);
+                db.ref('files').set(appState.files);
+                db.ref('users').set(appState.users);
+            }
+            // Local Session Persistence (Required for reload)
+            if (appState.user) localStorage.setItem('zp_current_user', JSON.stringify(appState.user));
+            else localStorage.removeItem('zp_current_user');
+        }
+
+        /* --- AUTH --- */
+        function switchAuthMode(mode) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if (mode === 'login') { document.getElementById('form-login').classList.remove('hidden'); document.getElementById('form-register').classList.add('hidden'); }
+            else { document.getElementById('form-login').classList.add('hidden'); document.getElementById('form-register').classList.remove('hidden'); }
+        }
+        function doRegister() {
+            const n = document.getElementById('reg-name').value;
+            const e = document.getElementById('reg-email').value;
+            const p = document.getElementById('reg-pass').value;
+
+            if (!n || !e || !p) return showToast("All fields are required.", "error");
+            if (e === ADMIN_EMAIL || appState.users.find(u => u.email === e)) return showToast("Email already registered.", "error");
+
+            const newUser = {
+                id: 'u' + Date.now(),
+                name: n,
+                email: e,
+                pass: p,
+                role: 'user',
+                banned: false,
+                joined: new Date().toISOString()
+            };
+
+            appState.users.push(newUser);
+            saveData();
+
+            showToast("Account created successfully!", "success");
+
+            // Auto-login
+            appState.user = newUser;
+            appState.viewingAs = newUser.email;
+            saveData(); // Persist session
+            showSessionTimer(); // Launch Session Timer
+        }
+        function doLogin() {
+            const e = document.getElementById('log-email').value.trim();
+            const p = document.getElementById('log-pass').value.trim();
+            if (e === ADMIN_EMAIL && p === ADMIN_PASS) {
+                appState.user = { name: "System Administrator", email: ADMIN_EMAIL, role: 'admin' };
+                appState.viewingAs = ADMIN_EMAIL;
+                saveData(); // Persist session
+                showSessionTimer(); return;
+            }
+            const u = appState.users.find(x => x.email === e && x.pass === p);
+            if (u) {
+                // if (u.role !== 'admin') return showToast("System access restricted to authorized administrators only.", "error");
+                if (u.banned) return showToast("Account Suspended.", "error");
+                appState.user = u; appState.viewingAs = u.email;
+                saveData(); // Persist session
+                showSessionTimer();
+            } else showToast("Invalid Credentials.", "error");
+        }
+        function logout() {
+            if (sessionInterval) clearInterval(sessionInterval);
+            appState.user = null;
+            localStorage.removeItem('zp_current_user');
+            localStorage.removeItem('zp_session_expiry');
+            location.reload();
+        }
+
+        /* --- SESSION TIMER --- */
+        let sessionInterval;
+
+        function showSessionTimer() {
+            const m = document.getElementById('modal-session-timer');
+            m.style.display = 'flex';
+            setTimeout(() => m.classList.add('show'), 10);
+            setTimeout(() => document.getElementById('session-minutes').focus(), 100);
+        }
+
+        function confirmSessionStart() {
+            const minsInput = document.getElementById('session-minutes');
+            const mins = parseInt(minsInput.value);
+
+            if (!mins || mins < 1) return showToast("Please enter a valid duration (min 1 minute).", "error");
+
+            const expiry = Date.now() + (mins * 60000);
+            localStorage.setItem('zp_session_expiry', expiry);
+
+            const m = document.getElementById('modal-session-timer');
+            m.classList.remove('show');
+            setTimeout(() => m.style.display = 'none', 300);
+
+            startSessionMonitor();
+            launchApp();
+
+            showToast(`Secure session active. Auto-logout in ${mins} minutes.`, "success");
+        }
+
+        function startSessionMonitor() {
+            if (sessionInterval) clearInterval(sessionInterval);
+
+            const verifySession = () => {
+                const expiry = localStorage.getItem('zp_session_expiry');
+                if (!expiry) return;
+
+                if (Date.now() > parseInt(expiry)) {
+                    showToast("Session Limit Reached. Logging out...", "error");
+                    setTimeout(logout, 2000);
+                }
+            };
+
+            verifySession();
+            sessionInterval = setInterval(verifySession, 10000); // Check every 10s
+        }
+
+        function launchApp() {
+            document.getElementById('auth-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('app-root').style.display = 'flex';
+                setTimeout(() => document.getElementById('app-root').classList.add('visible'), 50);
+            }, 300);
+
+            if (appState.user.role === 'admin') document.getElementById('nav-admin-dash').classList.remove('hidden');
+            renderSidebar(); openFolder('root');
+        }
+
+        /* --- LOGIC --- */
+        function renderSidebar() {
+            const staticList = document.getElementById('static-dashboard');
+            const scrollList = document.getElementById('folder-container');
+
+            staticList.innerHTML = '';
+            scrollList.innerHTML = '';
+
+            appState.folders.filter(f => f.id === 'root' || f.owner === appState.viewingAs).forEach(f => {
+                const isActive = appState.currentFolderId === f.id;
+                const div = document.createElement('div');
+                div.className = `nav-item ${isActive ? 'active' : ''}`;
+                div.onclick = () => openFolder(f.id);
+
+                // 3-Dot Icon direct access to settings
+                let menuHtml = '';
+                if (f.id !== 'root') {
+                    menuHtml = `<div class="folder-menu-btn" onclick="event.stopPropagation(); openFolderSettings('${f.id}')"><i class="fas fa-ellipsis-v"></i></div>`;
+                }
+
+                // Use folder color if set, or default
+                const iconStyle = `color: ${f.color || 'inherit'}; width:20px; text-align:center;`;
+                const textStyle = `color: ${f.color || 'inherit'}; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;`;
+
+                div.innerHTML = `<i class="fas ${f.icon || 'fa-folder'}" style="${iconStyle}"></i> 
+                                 <span style="${textStyle}">${f.name}</span> 
+                                 ${menuHtml}`;
+
+                if (f.id === 'root') {
+                    staticList.appendChild(div);
+                } else {
+                    scrollList.appendChild(div);
+                }
+            });
+        }
+
+        /* --- FOLDER SETTINGS --- */
+        function openFolderSettings(id) {
+            appState.renameTargetId = id;
+            const f = appState.folders.find(x => x.id == id);
+            if (f) {
+                document.getElementById('folder-name-input').value = f.name;
+                document.getElementById('settings-modal-title').innerText = (f.id == 'root' || f.parentId == 'root') ? 'Project Settings' : 'Folder Settings';
+                document.getElementById('folder-color-grid').style.display = 'flex';
+                document.getElementById('lbl-folder-color').style.display = 'block';
+
+                // Set pin state
+                const pinBtn = document.getElementById('modal-pin-btn');
+                if (f.pinned) pinBtn.classList.add('active');
+                else pinBtn.classList.remove('active');
+
+                selectFolderColor(f.color || 'var(--primary)', null);
+            }
+            modalOpen('folder-settings');
+        }
+
+        function openFileSettings(id) {
+            appState.renameTargetId = id;
+            const f = appState.files.find(x => x.id == id);
+            if (f) {
+                document.getElementById('folder-name-input').value = f.name;
+                document.getElementById('settings-modal-title').innerText = 'Resource Settings';
+                document.getElementById('folder-color-grid').style.display = 'flex';
+                document.getElementById('lbl-folder-color').style.display = 'block';
+
+                // Set pin state
+                const pinBtn = document.getElementById('modal-pin-btn');
+                if (f.pinned) pinBtn.classList.add('active');
+                else pinBtn.classList.remove('active');
+
+                selectFolderColor(f.color || 'var(--primary)', null);
+                modalOpen('folder-settings');
+            }
+        }
+
+        function togglePin() {
+            const id = appState.renameTargetId;
+            if (!id) return;
+
+            let item = appState.folders.find(f => f.id == id) || appState.files.find(f => f.id == id);
+            if (item) {
+                item.pinned = !item.pinned;
+                const pinBtn = document.getElementById('modal-pin-btn');
+                if (item.pinned) pinBtn.classList.add('active');
+                else pinBtn.classList.remove('active');
+                saveData();
+                showToast(item.pinned ? "Pinned to Dashboard" : "Unpinned from Dashboard", "success");
+            }
+        }
+
+        function selectFolderColor(color, el) {
+            document.getElementById('folder-color-input').value = color;
+            document.querySelectorAll('.color-option').forEach(d => d.classList.remove('selected'));
+            if (el) el.classList.add('selected');
+            else {
+                // Try to find matching element by background style (approximate)
+                const created = Array.from(document.querySelectorAll('.color-option')).find(d => d.style.background.includes(color) || (color.startsWith('var') && d.style.background.includes(color.replace('var(', '').replace(')', ''))));
+                if (created) created.classList.add('selected');
+            }
+        }
+
+        function execSaveFolderSettings() {
+            const n = document.getElementById('folder-name-input').value;
+            const c = document.getElementById('folder-color-input').value;
+
+            if (n && appState.renameTargetId) {
+                // Try to find in folders first
+                const folder = appState.folders.find(x => x.id == appState.renameTargetId);
+                if (folder) {
+                    folder.name = n;
+                    folder.color = c;
+                    saveData(); renderSidebar(); renderFiles(); modalClose();
+                    showToast("Changes saved successfully", "success");
+                    return;
+                }
+
+                // If not a folder, try to find in files
+                const file = appState.files.find(x => x.id == appState.renameTargetId);
+                if (file) {
+                    file.name = n;
+                    file.color = c;
+                    saveData(); renderFiles(); modalClose();
+                    showToast("File settings saved successfully", "success");
+                    return;
+                }
+            } else {
+                showToast("Name required", "error");
+            }
+        }
+
+        function openFolder(id) {
+            appState.currentFolderId = id;
+            document.getElementById('admin-view-container').classList.add('hidden');
+            document.getElementById('std-view-container').classList.remove('hidden');
+
+            // Clear Admin Active State
+            const adminBtn = document.getElementById('nav-admin-dash');
+            if (adminBtn) adminBtn.classList.remove('active');
+
+            const folder = appState.folders.find(f => f.id === id);
+            document.getElementById('page-title').innerText = folder ? folder.name : 'Files';
+            document.getElementById('page-subtitle').innerText = "Resource Manager";
+            renderSidebar(); renderFiles();
+            if (window.innerWidth < 768) document.getElementById('main-sidebar').classList.remove('active');
+        }
+
+        function renderFiles() {
+            const container = document.getElementById('file-grid-container'); container.innerHTML = '';
+            const isDashboard = appState.currentFolderId === 'root';
+
+            if (isDashboard) {
+                document.getElementById('page-title').innerText = 'Dashboard';
+                document.getElementById('page-subtitle').innerText = 'Your pinned resources';
+            }
+
+            // 1. Get Folders
+            let subfolders = [];
+            if (isDashboard) {
+                subfolders = appState.folders.filter(f => f.pinned && f.owner === appState.viewingAs);
+            } else {
+                subfolders = appState.folders.filter(f => f.parentId === appState.currentFolderId && f.owner === appState.viewingAs);
+            }
+
+            // 2. Get Files
+            let filesHere = [];
+            if (isDashboard) {
+                filesHere = appState.files.filter(f => f.pinned && f.owner === appState.viewingAs);
+            } else {
+                filesHere = appState.files.filter(f => f.folderId === appState.currentFolderId && f.owner === appState.viewingAs);
+            }
+
+            document.getElementById('item-counter').innerText = `${subfolders.length + filesHere.length} Items`;
+
+            if (isDashboard && subfolders.length === 0 && filesHere.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color:var(--text-muted);">
+                    <i class="fas fa-thumbtack" style="font-size: 3rem; margin-bottom: 16px; opacity: 0.2;"></i>
+                    <p>No items pinned to your dashboard.<br><small>Open folder settings to pin items here.</small></p>
+                </div>`;
+                return;
+            }
+
+            // Render Folders
+            subfolders.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'file-card folder-card';
+                el.onclick = () => openFolder(f.id);
+
+                const menuHtml = `
+                    <div class="card-menu-btn" onclick="event.stopPropagation(); openFolderSettings('${f.id}')"><i class="fas fa-ellipsis-v"></i></div>
+                `;
+
+                const iconStyle = `color: ${f.color || 'var(--primary)'}; font-size: 2.5rem; margin-bottom: 12px;`;
+                const pinBadge = f.pinned ? `<div class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</div>` : '';
+
+                el.innerHTML = `
+                    ${pinBadge}
+                    <div class="file-icon-box" style="border:none; background:transparent;">
+                        <i class="fas fa-folder" style="${iconStyle}"></i>
+                    </div>
+                    <div class="file-title" style="color: ${f.color || 'inherit'}">${f.name}</div>
+                    <div class="file-subtitle">Folder</div>
+                    ${menuHtml}
+                `;
+                container.appendChild(el);
+            });
+
+            // Render Files
+            filesHere.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'file-card';
+                el.onclick = () => openFile(f.id);
+
+                const itemColor = f.color || 'var(--primary)';
+                el.style.setProperty('--item-color', itemColor);
+
+                const menuHtml = `
+                    <div class="card-menu-btn" onclick="event.stopPropagation(); openFileSettings('${f.id}')"><i class="fas fa-ellipsis-v"></i></div>
+                `;
+
+                const iconStyle = `color: ${itemColor}`;
+                const titleStyle = `color: ${itemColor}`;
+                const pinBadge = f.pinned ? `<div class="pinned-badge"><i class="fas fa-thumbtack"></i> Pinned</div>` : '';
+
+                el.innerHTML = `
+                    ${pinBadge}
+                    <div class="file-icon-box"><i class="fas ${getIcon(f)}" style="${iconStyle}"></i></div>
+                    <div class="file-title" style="${titleStyle}">${f.name}</div><div class="file-subtitle">${f.lang || f.type}</div>
+                    ${menuHtml}`;
+                container.appendChild(el);
+            });
+        }
+
+        // Update getIcon to be safe
+        function getIcon(f) {
+            if (f.type === 'code') return 'fa-code'; if (f.subType === 'image') return 'fa-image'; if (f.type === 'link') return 'fa-link'; return 'fa-file-alt';
+        }
+
+        /* --- FEATURES --- */
+        function toggleMobileSearch() {
+            const ov = document.getElementById('mobile-search-overlay');
+            ov.style.display = ov.style.display === 'block' ? 'none' : 'block';
+            if (ov.style.display === 'block') document.getElementById('mobile-search-input').focus();
+        }
+
+        function filterItems(inputId) {
+            const q = document.getElementById(inputId).value.toLowerCase();
+            const container = document.getElementById('file-grid-container');
+            const title = document.getElementById('page-title');
+
+            if (!q) { openFolder(appState.currentFolderId); return; }
+
+            // Filter Folders by name only
+            const myFolders = appState.folders.filter(f => f.id !== 'root' && f.owner === appState.viewingAs);
+            const folderMatches = myFolders.filter(f => f.name.toLowerCase().includes(q));
+
+            // Filter Files by name only
+            const myFiles = appState.files.filter(f => f.owner === appState.viewingAs);
+            const fileMatches = myFiles.filter(f => f.name.toLowerCase().includes(q));
+
+            title.innerText = `Search: "${q}"`;
+            const totalMatches = folderMatches.length + fileMatches.length;
+            document.getElementById('item-counter').innerText = `${totalMatches} Results`;
+            container.innerHTML = '';
+
+            if (totalMatches === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color:var(--text-muted);">No matching folders or files found.</div>`;
+                return;
+            }
+
+            // Render Folder Matches
+            folderMatches.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'file-card folder-card';
+                el.onclick = () => openFolder(f.id);
+
+                const menuHtml = `
+                    <div class="card-menu-btn" onclick="event.stopPropagation(); openFolderSettings('${f.id}')"><i class="fas fa-ellipsis-v"></i></div>
+                `;
+
+                const iconStyle = `color: ${f.color || 'var(--primary)'}; font-size: 2.5rem; margin-bottom: 12px;`;
+
+                el.innerHTML = `
+                    <div class="file-icon-box" style="border:none; background:transparent;">
+                        <i class="fas fa-folder" style="${iconStyle}"></i>
+                    </div>
+                    <div class="file-title" style="color: ${f.color || 'inherit'}">${f.name}</div>
+                    <div class="file-subtitle">Folder</div>
+                    ${menuHtml}
+                `;
+                container.appendChild(el);
+            });
+
+            // Render File Matches
+            fileMatches.forEach(f => {
+                const el = document.createElement('div');
+                el.className = 'file-card';
+                el.onclick = () => openFile(f.id);
+
+                const itemColor = f.color || 'var(--primary)';
+                el.style.setProperty('--item-color', itemColor);
+
+                const menuHtml = `
+                    <div class="card-menu-btn" onclick="event.stopPropagation(); openFileSettings('${f.id}')"><i class="fas fa-ellipsis-v"></i></div>
+                `;
+
+                const iconStyle = `color: ${itemColor}`;
+                const titleStyle = `color: ${itemColor}`;
+
+                el.innerHTML = `<div class="file-icon-box"><i class="fas ${getIcon(f)}" style="${iconStyle}"></i></div>
+                    <div class="file-title" style="${titleStyle}">${f.name}</div><div class="file-subtitle">${f.lang || f.type}</div>
+                    ${menuHtml}`;
+                container.appendChild(el);
+            });
+        }
+
+        /* --- ACE EDITOR --- */
+        function triggerEditorSearch() {
+            if (editor) editor.execCommand('find');
+        }
+
+        function openFile(id) {
+            const f = appState.files.find(x => x.id === id);
+            if (f.type === 'link') { window.open(f.content, '_blank'); return; }
+            appState.currentFile = f; appState.editing = false;
+            document.getElementById('view-title').innerText = f.name; document.getElementById('view-badge').innerText = f.lang || f.type;
+            document.getElementById('view-code-wrap').classList.add('hidden');
+            document.getElementById('view-media-wrap').classList.add('hidden');
+            document.getElementById('btn-run').style.display = 'none';
+            document.getElementById('btn-edit').style.display = 'none';
+            document.getElementById('btn-search').style.display = 'none';
+
+            if (f.type === 'code') {
+                document.getElementById('view-code-wrap').classList.remove('hidden');
+                document.getElementById('btn-run').style.display = 'block';
+                document.getElementById('btn-edit').style.display = 'block';
+                document.getElementById('btn-search').style.display = 'block';
+                document.getElementById('btn-edit').innerText = "Edit";
+
+                let mode = f.lang;
+                if (['javascript', 'js'].includes(mode)) mode = 'javascript';
+                else if (['c_cpp', 'cpp', 'c'].includes(mode)) mode = 'c_cpp'; // Generic C/C++
+                else if (mode === 'html') mode = 'html';
+                else if (mode === 'css') mode = 'css';
+                else if (mode === 'python') mode = 'python';
+
+                editor.session.setMode(`ace/mode/${mode}`);
+                editor.setValue(f.content, -1);
+                editor.setReadOnly(true);
+            } else if (f.subType === 'image') {
+                document.getElementById('view-media-wrap').classList.remove('hidden');
+                document.getElementById('view-media-wrap').innerHTML = `<img src="${f.content}" style="max-height:100%; max-width:100%; border-radius:12px;">`;
+            } else {
+                document.getElementById('view-media-wrap').classList.remove('hidden');
+                document.getElementById('view-media-wrap').innerHTML = `<a href="${f.content}" target="_blank" class="btn btn-primary">Open Resource</a>`;
+            }
+            modalOpen('viewer');
+        }
+
+        function toggleEdit() {
+            if (!appState.editing) {
+                appState.editing = true; editor.setReadOnly(false); document.getElementById('btn-edit').innerText = "Save";
+            } else {
+                appState.currentFile.content = editor.getValue();
+                appState.editing = false; editor.setReadOnly(true); saveData(); document.getElementById('btn-edit').innerText = "Edit";
+            }
+        }
+
+        /* --- DUAL RUNNER --- */
+        function execRun() {
+            if (!['html', 'javascript', 'css'].includes(appState.currentFile.lang.toLowerCase())) return showToast("Code type not executable.", "warning");
+            document.getElementById('live-env').style.display = 'flex';
+
+            const content = appState.currentFile.lang === 'html' ? appState.currentFile.content : `<script>${appState.currentFile.content}<\/script>`;
+
+            const frameD = document.getElementById('frame-desktop');
+            const frameM = document.getElementById('frame-mobile');
+
+            [frameD, frameM].forEach(fr => {
+                const doc = fr.contentWindow.document;
+                doc.open(); doc.write(content); doc.close();
+            });
+        }
+        function toggleFrame(type) {
+            const wm = document.getElementById('wrap-mobile');
+            const wd = document.getElementById('wrap-desktop');
+            if (type === 'all') { wm.style.display = 'flex'; wd.style.display = 'flex'; }
+            if (type === 'mobile') { wm.style.display = 'flex'; wd.style.display = 'none'; }
+            if (type === 'desktop') { wm.style.display = 'none'; wd.style.display = 'flex'; }
+        }
+        function closeLiveEnv() { document.getElementById('live-env').style.display = 'none'; }
+
+        /* --- NOTIFICATIONS --- */
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = `toast ${type}`;
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-exclamation-circle';
+
+            el.innerHTML = `<i class="fas ${icon}" style="font-size:1.2rem; color:var(--${type === 'info' ? 'primary' : type})"></i>
+                            <span style="font-size:0.9rem; font-weight:500;">${msg}</span>`;
+            container.appendChild(el);
+            setTimeout(() => {
+                el.classList.add('hide');
+                el.addEventListener('animationend', () => el.remove());
+            }, 3000);
+        }
+
+        let confirmCallback = null;
+        function showConfirm(msg, callback) {
+            document.getElementById('confirm-msg').innerText = msg;
+            confirmCallback = callback;
+            const m = document.getElementById('modal-confirm');
+            m.style.display = 'flex';
+            setTimeout(() => m.classList.add('show'), 10);
+        }
+
+        function closeConfirmModal() {
+            const m = document.getElementById('modal-confirm');
+            m.classList.remove('show');
+            setTimeout(() => { m.style.display = 'none'; confirmCallback = null; }, 300);
+        }
+
+        document.getElementById('btn-do-confirm').onclick = () => {
+            if (confirmCallback) confirmCallback();
+            closeConfirmModal();
+        };
+
+        /* --- UTILS --- */
+        function modalOpen(id) {
+            const m = document.getElementById('modal-' + id); m.style.display = 'flex'; setTimeout(() => m.classList.add('show'), 10);
+            if (id === 'upload') toggleUploadFields();
+        }
+        function modalClose() { document.querySelectorAll('.modal-overlay').forEach(m => { m.classList.remove('show'); setTimeout(() => m.style.display = 'none', 300); }); }
+        function toggleUploadFields() {
+            const type = document.getElementById('res-type').value;
+            ['code', 'link', 'file'].forEach(t => document.getElementById(`field-${t}`).classList.add('hidden'));
+            document.getElementById(`field-${type}`).classList.remove('hidden');
+            document.getElementById('res-lang').style.display = type === 'code' ? 'block' : 'none';
+        }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('zp_theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); }
+        function checkTheme() { if (localStorage.getItem('zp_theme') === 'light') document.body.classList.add('light-mode'); }
+        function toggleSidebarMobile() { document.getElementById('main-sidebar').classList.toggle('active'); }
+        function deleteFile(id, e) {
+            if (e) e.stopPropagation();
+            showConfirm("Confirm Delete?", () => {
+                appState.files = appState.files.filter(f => f.id != id);
+                saveData(); renderFiles();
+                showToast("File deleted", "success");
+            });
+        }
+
+        /* --- NEW FOLDER ACTIONS --- */
+        function execDeleteFolder(id) {
+            showConfirm("Are you sure you want to delete this item?", () => {
+                appState.folders = appState.folders.filter(f => f.id != id);
+                appState.files = appState.files.filter(f => f.folderId != id);
+                saveData();
+                if (appState.currentFolderId == id) openFolder('root');
+                else {
+                    renderSidebar();
+                    renderFiles();
+                }
+                showToast("Deleted successfully", "success");
+            });
+        }
+
+        function toggleFullscreenDesktop() { document.getElementById('d-frame-box').classList.toggle('fullscreen'); }
+        function execCreateFolder() {
+            // Allow creating projects anywhere, including root
+            const name = document.getElementById('new-folder-input').value;
+            if (name) {
+                const parentId = appState.currentFolderId === 'root' ? 'root' : appState.currentFolderId;
+
+                // Check if folder name already exists in this location
+                const exists = appState.folders.find(f => f.parentId === parentId && f.name === name && f.owner === appState.viewingAs);
+                if (exists) return showToast("A folder with this name already exists.", "error");
+
+                appState.folders.push({
+                    id: 'f' + Date.now(),
+                    parentId: parentId,
+                    name,
+                    icon: 'fa-folder',
+                    color: null,
+                    owner: appState.viewingAs
+                });
+                saveData();
+                if (parentId === 'root') renderSidebar();
+                else renderFiles();
+                modalClose();
+                showToast("Folder created", "success");
+            }
+        }
+        function execSaveItem() {
+            if (appState.currentFolderId === 'root') {
+                return showToast("Cannot upload resources to Dashboard. Please open a folder first.", "error");
+            }
+            const t = document.getElementById('res-type').value, n = document.getElementById('res-name').value;
+            if (!n) return showToast("Name required", "error");
+            if (t === 'file') {
+                const f = document.getElementById('res-file-obj').files[0];
+                if (f) { const r = new FileReader(); r.onload = e => { appState.files.push({ id: Date.now(), folderId: appState.currentFolderId, name: n, type: 'file', subType: f.type.startsWith('image') ? 'image' : 'file', content: e.target.result, owner: appState.viewingAs }); saveData(); renderFiles(); modalClose(); }; r.readAsDataURL(f); }
+            } else {
+                const c = t === 'code' ? document.getElementById('res-content-code').value : document.getElementById('res-content-link').value;
+                appState.files.push({ id: Date.now(), folderId: appState.currentFolderId, name: n, type: t, lang: document.getElementById('res-lang').value, content: c, owner: appState.viewingAs });
+                saveData(); renderFiles(); modalClose();
+            }
+        }
+        function openAdminDashboard() {
+            if (appState.user.role !== 'admin') return;
+            document.getElementById('std-view-container').classList.add('hidden');
+            document.getElementById('admin-view-container').classList.remove('hidden');
+
+            // Set Admin Active State and clear others
+            appState.currentFolderId = 'admin-panel'; // Virtual ID
+            renderSidebar(); // Will clear Dashboard active state because ID doesn't match 'root'
+            document.getElementById('nav-admin-dash').classList.add('active');
+
+            document.getElementById('stat-users').innerText = appState.users.length;
+            document.getElementById('stat-files').innerText = appState.files.length;
+            const tb = document.getElementById('admin-user-table'); tb.innerHTML = '';
+
+            appState.users.forEach(u => {
+                const isBanned = u.banned;
+                const banBtnText = isBanned ? 'UNBAN' : 'BAN';
+                const banColor = isBanned ? 'var(--success)' : 'var(--warning)';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${u.name}</b></td>
+                    <td>${u.email}</td>
+                    <td>${u.role}</td>
+                    <td style="color:${isBanned ? 'var(--danger)' : 'var(--success)'}; font-weight:bold;">${isBanned ? 'SUSPENDED' : 'ACTIVE'}</td>
+                    <td style="display:flex; gap:8px; justify-content:flex-end;">
+                        <button class="btn btn-outline" style="font-size:0.8rem; padding:6px 12px; height:36px;" onclick="impersonate('${u.email}')">LOGIN AS</button>
+                        <button class="btn" style="font-size:0.8rem; padding:6px 12px; height:36px; border:1px solid ${banColor}; color:${banColor}; background:transparent;" onclick="toggleBan('${u.email}')">${banBtnText}</button>
+                        <button class="btn btn-danger" style="font-size:0.8rem; padding:6px 12px; height:36px;" onclick="deleteUser('${u.email}')"><i class="fas fa-trash"></i></button>
+                    </td>`;
+                tb.appendChild(tr);
+            });
+        }
+
+        function toggleBan(email) {
+            const u = appState.users.find(x => x.email === email);
+            if (!u) return;
+            if (u.role === 'admin') return showToast("Cannot ban an administrator.", "error");
+
+            u.banned = !u.banned;
+            saveData();
+            openAdminDashboard(); // Refresh UI
+            showToast(`User ${u.banned ? 'banned' : 'unbanned'} successfully.`, "success");
+        }
+
+        function deleteUser(email) {
+            const u = appState.users.find(x => x.email === email);
+            if (!u) return;
+            if (u.role === 'admin') return showToast("Cannot delete an administrator.", "error");
+
+            showConfirm(`Delete user <b>${u.name}</b>? All their data will be wiped.`, () => {
+                // 1. Remove User
+                appState.users = appState.users.filter(x => x.email !== email);
+
+                // 2. Remove Files owned by user
+                appState.files = appState.files.filter(f => f.owner !== email);
+
+                // 3. Remove Folders owned by user
+                appState.folders = appState.folders.filter(f => f.owner !== email);
+
+                saveData();
+                openAdminDashboard(); // Refresh UI
+                showToast("User and all associated data deleted.", "success");
+            });
+        }
+        function impersonate(e) { appState.viewingAs = e; openFolder('root'); }
+        function adminResetAll() {
+            showConfirm("NUKE DATABASE? This cannot be undone.", () => {
+                localStorage.clear(); location.reload();
+            });
+        }
+    </script>
+</body>
+
+</html>
