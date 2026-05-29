@@ -571,6 +571,72 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
+        @media (min-width: 769px) {
+            #co-course-detail {
+                position: fixed !important;
+                inset: 50% auto auto 50% !important;
+                transform: translate(-50%, -50%) !important;
+                width: 90% !important;
+                max-width: 1100px !important;
+                height: 85vh !important;
+                border-radius: 24px !important;
+                border: 1px solid var(--border-strong) !important;
+                box-shadow: 0 24px 64px rgba(0,0,0,0.5) !important;
+                overflow: hidden !important;
+                background: var(--bg-panel) !important;
+            }
+            #co-course-detail::before {
+                content: '' !important;
+                position: fixed !important;
+                inset: -100vh -100vw !important;
+                background: rgba(0, 0, 0, 0.6) !important;
+                backdrop-filter: blur(8px) !important;
+                -webkit-backdrop-filter: blur(8px) !important;
+                z-index: -1 !important;
+                pointer-events: none !important;
+            }
+            #co-course-detail.co-active {
+                animation: coFadeScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+            }
+            #co-detail-body {
+                max-width: 100% !important;
+                width: 100% !important;
+                box-sizing: border-box;
+                display: grid !important;
+                grid-template-columns: 1.25fr 1fr !important;
+                grid-template-areas: 
+                    "teacher summary"
+                    "marks summary" !important;
+                gap: 20px !important;
+                align-items: start !important;
+                padding: 24px !important;
+            }
+            .co-teacher-card {
+                grid-area: teacher;
+                margin-bottom: 0 !important;
+            }
+            .co-marks-card {
+                grid-area: marks;
+                margin-bottom: 0 !important;
+            }
+            .co-summary-card {
+                grid-area: summary;
+                margin-bottom: 0 !important;
+                position: sticky;
+                top: 0;
+            }
+            #co-save-bar {
+                position: absolute !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+            }
+        }
+        @keyframes coFadeScale {
+            from { opacity: 0; transform: translate(-50%, -46%) scale(0.95); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
         /* ── HEADER BAR ── */
         #co-header {
             background: var(--bg-sidebar);
@@ -1387,6 +1453,480 @@
             border-radius: 99px;
             margin: 0 auto 20px;
         }
+
+        /* ════════════════════════════════════
+           WINDOW MANAGER SYSTEM
+           ════════════════════════════════════ */
+        .os-window {
+            position: fixed;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-strong);
+            border-radius: 16px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 300;
+            min-width: 360px;
+            min-height: 280px;
+            opacity: 0;
+            transform: scale(0.92) translateY(16px);
+            animation: osWinOpen 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .os-window.closing {
+            animation: osWinClose 0.22s cubic-bezier(0.4, 0, 1, 1) forwards;
+        }
+        @keyframes osWinOpen {
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes osWinClose {
+            from { opacity: 1; transform: scale(1) translateY(0); }
+            to { opacity: 0; transform: scale(0.92) translateY(16px); }
+        }
+        .os-window.focused {
+            box-shadow: 0 24px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(88,101,242,0.25), 0 0 40px rgba(88,101,242,0.08);
+        }
+        .os-window.maximized {
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            border-radius: 0 !important;
+            border: none !important;
+        }
+        .os-window.minimized {
+            animation: osWinMinimize 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+            pointer-events: none;
+        }
+        @keyframes osWinMinimize {
+            to { opacity: 0; transform: scale(0.4) translateY(100px); }
+        }
+
+        .os-win-header {
+            height: 48px;
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            padding: 0 14px;
+            gap: 10px;
+            cursor: grab;
+            flex-shrink: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .os-win-header:active { cursor: grabbing; }
+
+        .os-win-title {
+            flex: 1;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Sora', sans-serif;
+            letter-spacing: -0.2px;
+        }
+        .os-win-title i {
+            margin-right: 8px;
+            font-size: 0.82rem;
+            color: var(--primary);
+        }
+
+        .os-win-controls {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .os-win-ctrl {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: filter 0.15s, transform 0.15s;
+            position: relative;
+        }
+        .os-win-ctrl:hover { filter: brightness(1.25); transform: scale(1.15); }
+        .os-win-ctrl.close-btn { background: #ff5f56; }
+        .os-win-ctrl.minimize-btn { background: #ffbd2e; }
+        .os-win-ctrl.maximize-btn { background: #27c93f; }
+
+        .os-win-body {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+            position: relative;
+            min-height: 0;
+        }
+        .os-win-body.no-pad { padding: 0; }
+
+        .os-win-resize {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 18px;
+            height: 18px;
+            cursor: nwse-resize;
+            z-index: 10;
+        }
+        .os-win-resize::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid var(--border-strong);
+            border-bottom: 2px solid var(--border-strong);
+            opacity: 0.5;
+        }
+        .os-window.maximized .os-win-resize { display: none; }
+
+        /* Window Taskbar */
+        #os-taskbar {
+            position: fixed;
+            bottom: 12px;
+            /* Center within main content area (account for sidebar) */
+            left: calc(var(--sidebar-width) + (100vw - var(--sidebar-width)) / 2);
+            transform: translateX(-50%);
+            display: none;
+            align-items: center;
+            padding: 4px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            z-index: 299;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            /* Prevent overflow — constrain */
+            max-width: calc(100vw - var(--sidebar-width) - 48px);
+            transition: left 0.3s ease, transform 0.3s ease;
+        }
+        #os-taskbar::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        #os-taskbar.visible { display: flex; }
+        
+        .taskbar-items-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 6px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            scroll-behavior: smooth;
+        }
+        .taskbar-items-wrap::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        
+        .taskbar-scroll-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--trans-fast);
+            flex-shrink: 0;
+            margin: 0 4px;
+        }
+        .taskbar-scroll-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .taskbar-scroll-btn.hidden {
+            display: none !important;
+        }
+        
+        .taskbar-item {
+            padding: 6px 14px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--trans-fast);
+            white-space: nowrap;
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .taskbar-item:hover { background: var(--bg-body); border-color: var(--primary); color: var(--text-main); }
+        .taskbar-item.active { border-color: var(--primary); color: var(--primary); background: rgba(88,101,242,0.1); }
+        .taskbar-item .taskbar-close {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            transition: 0.15s;
+            flex-shrink: 0;
+        }
+        .taskbar-item .taskbar-close:hover { background: var(--danger); color: #fff; }
+
+        /* ════════════════════════════════════
+           DRAG & DROP UPLOAD OVERLAY
+           ════════════════════════════════════ */
+        #drag-drop-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+        #drag-drop-overlay.active {
+            display: flex;
+            pointer-events: all;
+            animation: ddFadeIn 0.2s ease;
+        }
+        @keyframes ddFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .dd-zone {
+            width: 420px;
+            max-width: 90vw;
+            padding: 50px 40px;
+            border: 3px dashed var(--primary);
+            border-radius: 24px;
+            background: rgba(88,101,242,0.08);
+            text-align: center;
+            position: relative;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        #drag-drop-overlay.active .dd-zone {
+            animation: ddPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes ddPulse {
+            0%, 100% { border-color: var(--primary); background: rgba(88,101,242,0.08); }
+            50% { border-color: var(--accent); background: rgba(88,101,242,0.15); }
+        }
+        .dd-zone-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            animation: ddFloat 2s ease-in-out infinite;
+        }
+        @keyframes ddFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .dd-zone h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+        .dd-zone p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* ════════════════════════════════════
+           BULK SELECT MODE
+           ════════════════════════════════════ */
+        .file-card .bulk-checkbox {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 7px;
+            border: 2px solid var(--border-strong);
+            background: var(--bg-panel);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: var(--trans-fast);
+            font-size: 0.7rem;
+            color: transparent;
+        }
+        body.bulk-mode .file-card .bulk-checkbox {
+            display: flex;
+        }
+        body.bulk-mode .file-card .pinned-badge {
+            display: none;
+        }
+        .file-card.bulk-selected .bulk-checkbox {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+        .file-card.bulk-selected {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px var(--primary-glow) !important;
+        }
+        body.bulk-mode .file-card:hover {
+            transform: none;
+        }
+        body.bulk-mode .file-card .card-menu-btn {
+            display: none !important;
+        }
+
+        /* Bulk action floating bar */
+        #bulk-action-bar {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-strong);
+            border-radius: 16px;
+            z-index: 250;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s;
+            pointer-events: none;
+        }
+        #bulk-action-bar.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        #bulk-action-bar.with-taskbar {
+            bottom: 76px;
+        }
+        .flex-between #bulk-action-bar {
+            position: static !important;
+            transform: none !important;
+            opacity: 1 !important;
+            pointer-events: all !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            display: flex !important;
+        }
+        .flex-between #bulk-action-bar:not(.visible) {
+            display: none !important;
+        }
+        #bulk-count-badge {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+        .bulk-bar-btn {
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-strong);
+            background: transparent;
+            color: var(--text-main);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--trans-fast);
+            font-family: inherit;
+        }
+        .bulk-bar-btn:hover { background: var(--bg-card); }
+        .bulk-bar-btn.danger { border-color: rgba(239,68,68,0.3); color: var(--danger); }
+        .bulk-bar-btn.danger:hover { background: rgba(239,68,68,0.1); }
+
+        /* Bulk select toggle button in header */
+        #btn-bulk-toggle {
+            display: none;
+        }
+        #btn-bulk-toggle.has-items {
+            display: inline-flex;
+        }
+        #btn-bulk-toggle.active {
+            background: rgba(88,101,242,0.15) !important;
+            border-color: var(--primary) !important;
+            color: var(--primary) !important;
+        }
+
+        /* Mobile adjustments for new features */
+        @media (max-width: 768px) {
+            .os-window {
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100dvh !important;
+                border-radius: 0 !important;
+                min-width: unset !important;
+                min-height: unset !important;
+                border: none !important;
+            }
+            .os-win-resize { display: none; }
+            .os-win-header { height: 52px; padding: 0 12px; }
+            .os-win-ctrl.minimize-btn,
+            .os-win-ctrl.maximize-btn { display: none; }
+            #os-taskbar {
+                bottom: 68px;
+                /* On mobile, center in the full viewport (no sidebar) */
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                max-width: calc(100vw - 24px) !important;
+            }
+            #bulk-action-bar {
+                bottom: 76px;
+                width: calc(100% - 24px);
+                max-width: 400px;
+                padding: 8px 12px;
+                border-radius: 14px;
+                gap: 8px;
+                justify-content: space-between;
+            }
+            #bulk-action-bar.with-taskbar {
+                bottom: 132px;
+            }
+            .bulk-btn-text {
+                display: none !important;
+            }
+            .bulk-bar-btn {
+                padding: 8px 12px !important;
+                font-size: 0.85rem !important;
+            }
+            #bulk-count-badge {
+                font-size: 0.72rem !important;
+                padding: 4px 8px !important;
+            }
+            .dd-zone {
+                padding: 36px 24px;
+            }
+            .dd-zone-icon {
+                font-size: 2.8rem;
+            }
+            .dd-zone h3 {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 
@@ -1479,6 +2019,9 @@
                     <button class="btn btn-primary" onclick="modalOpen('upload')">
                         <i class="fas fa-cloud-upload"></i> <span class="btn-label">Upload</span>
                     </button>
+                    <button id="btn-bulk-toggle" class="btn btn-outline" onclick="toggleBulkMode()" title="Select multiple items">
+                        <i class="fas fa-check-square"></i> <span class="btn-label">Select</span>
+                    </button>
                 </div>
             </header>
 
@@ -1492,12 +2035,14 @@
 
             <div class="view-content" id="content-area">
                 <div id="std-view-container">
-                    <div class="flex-between" style="margin-bottom: 30px;">
+                    <div class="flex-between" style="margin-bottom: 30px; align-items: flex-start;">
                         <div>
-                            <h2 class="header-title" id="page-title">Dashboard</h2>
-                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;" id="page-subtitle">Manage your cloud resources</p>
+                            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;" id="page-title-container">
+                                <h2 class="header-title" id="page-title" style="margin: 0; font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px;">Dashboard</h2>
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;" id="page-subtitle">Manage your cloud resources</p>
                         </div>
-                        <div style="text-align: right;">
+                        <div style="text-align: right; padding-top: 6px;">
                             <span id="item-counter" style="background: var(--bg-card); padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 0.8rem; font-weight: 600;">0 Items</span>
                         </div>
                     </div>
@@ -1868,6 +2413,32 @@
     </div>
 
     <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column-reverse; gap: 10px;"></div>
+
+    <!-- Drag & Drop Overlay -->
+    <div id="drag-drop-overlay">
+        <div class="dd-zone">
+            <div class="dd-zone-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <h3>Drop files here</h3>
+            <p>Release to upload files to the current folder</p>
+        </div>
+    </div>
+
+    <!-- Bulk Select Action Bar -->
+    <div id="bulk-action-bar">
+        <span id="bulk-count-badge">0 selected</span>
+        <button class="bulk-bar-btn" onclick="bulkSelectAll()"><i class="fas fa-check-double"></i> <span class="bulk-btn-text">Select All</span></button>
+        <button class="bulk-bar-btn" onclick="bulkDeselectAll()"><i class="fas fa-square"></i> <span class="bulk-btn-text">Deselect</span></button>
+        <button class="bulk-bar-btn danger" onclick="bulkDeleteSelected()"><i class="fas fa-trash-alt"></i> <span class="bulk-btn-text">Delete</span></button>
+        <button class="bulk-bar-btn" onclick="exitBulkMode()"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Window Taskbar -->
+    <div id="os-taskbar">
+        <button id="taskbar-prev-btn" class="taskbar-scroll-btn hidden" onclick="WinManager.scrollTaskbar(-1)"><i class="fas fa-chevron-left"></i></button>
+        <div id="taskbar-items-container" class="taskbar-items-wrap" onscroll="WinManager.checkTaskbarScroll()"></div>
+        <button id="taskbar-next-btn" class="taskbar-scroll-btn hidden" onclick="WinManager.scrollTaskbar(1)"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
 
     <div id="modal-confirm" class="modal-overlay">
         <div class="modal-box" style="max-width: 350px; text-align: center; border: 1px solid var(--border-strong);">
@@ -3250,6 +3821,711 @@
                         <span class="co-sum-prog-pct">${pct.toFixed(1)}%</span>
                     </div>`;
                 listEl.appendChild(card);
+            });
+        }
+
+        /* ════════════════════════════════════════════════════════
+           WINDOW MANAGER SYSTEM
+           ════════════════════════════════════════════════════════ */
+
+        const WinManager = {
+            windows: [],
+            topZ: 300,
+            nextId: 1,
+
+            create(options) {
+                const id = 'oswin-' + (this.nextId++);
+                const isMobile = window.innerWidth < 768;
+                const vw = window.innerWidth, vh = window.innerHeight;
+                const w = options.width || 700, h = options.height || 500;
+                const x = options.x ?? Math.max(40, (vw - w) / 2 + (this.windows.length * 30) % 120);
+                const y = options.y ?? Math.max(40, (vh - h) / 2 + (this.windows.length * 30) % 80);
+
+                const win = document.createElement('div');
+                win.className = 'os-window focused';
+                win.id = id;
+                win.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px;z-index:${++this.topZ};`;
+
+                win.innerHTML = `
+                    <div class="os-win-header" data-winid="${id}">
+                        <div class="os-win-controls">
+                            <button class="os-win-ctrl close-btn" onclick="WinManager.close('${id}')" title="Close"></button>
+                            <button class="os-win-ctrl minimize-btn" onclick="WinManager.minimize('${id}')" title="Minimize"></button>
+                            <button class="os-win-ctrl maximize-btn" onclick="WinManager.maximize('${id}')" title="Maximize"></button>
+                        </div>
+                        <div class="os-win-title"><i class="${options.icon || 'fas fa-window-maximize'}"></i>${options.title || 'Window'}</div>
+                    </div>
+                    <div class="os-win-body ${options.noPadding ? 'no-pad' : ''}" id="${id}-body"></div>
+                    <div class="os-win-resize" data-winid="${id}"></div>
+                `;
+
+                document.body.appendChild(win);
+
+                const bodyEl = document.getElementById(id + '-body');
+                if (options.content) bodyEl.innerHTML = options.content;
+                if (options.element) bodyEl.appendChild(options.element);
+
+                const winData = {
+                    id, el: win, title: options.title || 'Window',
+                    icon: options.icon || 'fas fa-window-maximize',
+                    minimized: false, maximized: false,
+                    prevRect: null
+                };
+                this.windows.push(winData);
+
+                // Focus on click
+                win.addEventListener('mousedown', () => this.focus(id));
+                win.addEventListener('touchstart', () => this.focus(id), { passive: true });
+
+                // Drag support
+                this._initDrag(win, id);
+                this._initResize(win, id);
+
+                this.focus(id);
+                this._updateTaskbar();
+
+                if (isMobile) {
+                    this.maximize(id);
+                }
+
+                return { id, bodyEl, winEl: win };
+            },
+
+            close(id) {
+                const idx = this.windows.findIndex(w => w.id === id);
+                if (idx === -1) return;
+                const win = this.windows[idx];
+                win.el.classList.add('closing');
+                win.el.classList.remove('focused');
+                setTimeout(() => {
+                    win.el.remove();
+                    this.windows.splice(idx, 1);
+                    this._updateTaskbar();
+                }, 220);
+            },
+
+            minimize(id) {
+                const win = this.windows.find(w => w.id === id);
+                if (!win) return;
+                win.minimized = !win.minimized;
+                if (win.minimized) {
+                    win.el.classList.add('minimized');
+                    win.el.classList.remove('focused');
+                } else {
+                    win.el.classList.remove('minimized');
+                    this.focus(id);
+                }
+                this._updateTaskbar();
+            },
+
+            maximize(id) {
+                const win = this.windows.find(w => w.id === id);
+                if (!win) return;
+                if (!win.maximized) {
+                    win.prevRect = {
+                        left: win.el.style.left, top: win.el.style.top,
+                        width: win.el.style.width, height: win.el.style.height
+                    };
+                    win.el.classList.add('maximized');
+                    win.maximized = true;
+                } else {
+                    win.el.classList.remove('maximized');
+                    if (win.prevRect) {
+                        Object.assign(win.el.style, win.prevRect);
+                    }
+                    win.maximized = false;
+                }
+            },
+
+            focus(id) {
+                this.windows.forEach(w => w.el.classList.remove('focused'));
+                const win = this.windows.find(w => w.id === id);
+                if (win) {
+                    win.el.style.zIndex = ++this.topZ;
+                    win.el.classList.add('focused');
+                    if (win.minimized) {
+                        win.minimized = false;
+                        win.el.classList.remove('minimized');
+                    }
+                }
+                this._updateTaskbar();
+            },
+
+            _initDrag(el, id) {
+                const header = el.querySelector('.os-win-header');
+                let isDragging = false, startX, startY, origX, origY;
+
+                const onStart = (e) => {
+                    const win = this.windows.find(w => w.id === id);
+                    if (win && win.maximized) return;
+                    const ev = e.touches ? e.touches[0] : e;
+                    isDragging = true;
+                    startX = ev.clientX;
+                    startY = ev.clientY;
+                    origX = el.offsetLeft;
+                    origY = el.offsetTop;
+                    el.style.transition = 'none';
+                    document.body.style.userSelect = 'none';
+                };
+
+                const onMove = (e) => {
+                    if (!isDragging) return;
+                    const ev = e.touches ? e.touches[0] : e;
+                    const dx = ev.clientX - startX, dy = ev.clientY - startY;
+                    el.style.left = Math.max(0, origX + dx) + 'px';
+                    el.style.top = Math.max(0, origY + dy) + 'px';
+                };
+
+                const onEnd = () => {
+                    isDragging = false;
+                    el.style.transition = '';
+                    document.body.style.userSelect = '';
+                };
+
+                header.addEventListener('mousedown', onStart);
+                header.addEventListener('touchstart', onStart, { passive: true });
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('touchmove', onMove, { passive: true });
+                document.addEventListener('mouseup', onEnd);
+                document.addEventListener('touchend', onEnd);
+            },
+
+            _initResize(el, id) {
+                const handle = el.querySelector('.os-win-resize');
+                let isResizing = false, startX, startY, origW, origH;
+
+                const onStart = (e) => {
+                    e.preventDefault(); e.stopPropagation();
+                    const ev = e.touches ? e.touches[0] : e;
+                    isResizing = true;
+                    startX = ev.clientX; startY = ev.clientY;
+                    origW = el.offsetWidth; origH = el.offsetHeight;
+                    el.style.transition = 'none';
+                    document.body.style.userSelect = 'none';
+                };
+
+                const onMove = (e) => {
+                    if (!isResizing) return;
+                    const ev = e.touches ? e.touches[0] : e;
+                    const newW = Math.max(360, origW + (ev.clientX - startX));
+                    const newH = Math.max(280, origH + (ev.clientY - startY));
+                    el.style.width = newW + 'px';
+                    el.style.height = newH + 'px';
+                };
+
+                const onEnd = () => {
+                    isResizing = false;
+                    el.style.transition = '';
+                    document.body.style.userSelect = '';
+                };
+
+                handle.addEventListener('mousedown', onStart);
+                handle.addEventListener('touchstart', onStart, { passive: false });
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('touchmove', onMove, { passive: true });
+                document.addEventListener('mouseup', onEnd);
+                document.addEventListener('touchend', onEnd);
+            },
+
+            _updateTaskbar() {
+                const tb = document.getElementById('os-taskbar');
+                const container = document.getElementById('taskbar-items-container');
+                const bar = document.getElementById('bulk-action-bar');
+                if (this.windows.length === 0) {
+                    tb.classList.remove('visible');
+                    if (container) container.innerHTML = '';
+                    if (bar) bar.classList.remove('with-taskbar');
+                    return;
+                }
+                tb.classList.add('visible');
+                if (bar) bar.classList.add('with-taskbar');
+                if (container) {
+                    container.innerHTML = this.windows.map(w => {
+                        const active = w.el.classList.contains('focused') && !w.minimized;
+                        return `<div class="taskbar-item ${active ? 'active' : ''} ${w.minimized ? '' : ''}" onclick="WinManager.focus('${w.id}')">
+                            <i class="${w.icon}" style="font-size:0.72rem;"></i>
+                            <span style="max-width:90px;overflow:hidden;text-overflow:ellipsis;">${w.title}</span>
+                            <span class="taskbar-close" onclick="event.stopPropagation();WinManager.close('${w.id}')"><i class="fas fa-times"></i></span>
+                        </div>`;
+                    }).join('');
+                    
+                    // Trigger scroll check and auto-scroll active element into view
+                    requestAnimationFrame(() => {
+                        this.checkTaskbarScroll();
+                        const activeItem = container.querySelector('.taskbar-item.active');
+                        if (activeItem) {
+                            activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                        }
+                    });
+                }
+            },
+
+            scrollTaskbar(direction) {
+                const container = document.getElementById('taskbar-items-container');
+                if (!container) return;
+                container.scrollBy({ left: direction * 160, behavior: 'smooth' });
+            },
+
+            checkTaskbarScroll() {
+                const container = document.getElementById('taskbar-items-container');
+                const prevBtn = document.getElementById('taskbar-prev-btn');
+                const nextBtn = document.getElementById('taskbar-next-btn');
+                if (!container || !prevBtn || !nextBtn) return;
+
+                const hasOverflow = container.scrollWidth > container.clientWidth;
+                if (!hasOverflow) {
+                    prevBtn.classList.add('hidden');
+                    nextBtn.classList.add('hidden');
+                    return;
+                }
+
+                if (container.scrollLeft <= 5) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+
+                if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 5) {
+                    nextBtn.classList.add('hidden');
+                } else {
+                    nextBtn.classList.remove('hidden');
+                }
+            },
+
+            openFileViewer(fileId) {
+                const f = appState.files.find(x => x.id === fileId);
+                if (!f) return;
+                if (f.type === 'link') { window.open(f.content, '_blank'); return; }
+
+                const existingWin = this.windows.find(w => w._fileId === fileId);
+                if (existingWin) { this.focus(existingWin.id); return; }
+
+                appState.currentFile = f;
+                appState.editing = false;
+
+                let bodyContent = '';
+                const badgeColor = '#5865f2';
+                const langBadge = `<span style="background:${badgeColor};color:#fff;padding:2px 10px;border-radius:6px;font-size:0.72rem;font-weight:700;">${f.lang || f.type}</span>`;
+
+                if (f.type === 'code') {
+                    const escapedCode = (f.content || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    bodyContent = `
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+                            ${langBadge}
+                            <button class="btn btn-outline" style="height:34px;padding:0 12px;font-size:0.8rem;" onclick="WinManager._winCopyCode(this)" title="Copy code"><i class="fas fa-copy"></i> <span class="btn-label">Copy</span></button>
+                            <button class="btn btn-outline" style="height:34px;padding:0 12px;font-size:0.8rem;" onclick="WinManager._winEditCode(this,'${fileId}')" title="Edit"><i class="fas fa-edit"></i> <span class="btn-label">Edit</span></button>
+                            <button class="btn btn-primary" style="height:34px;padding:0 12px;font-size:0.8rem;" onclick="WinManager._winRunCode('${fileId}')" title="Run"><i class="fas fa-play"></i> <span class="btn-label">Run</span></button>
+                        </div>
+                        <div class="code-viewer" style="height:calc(100% - 52px);border-radius:12px;overflow:hidden;">
+                            <pre style="margin:0;padding:16px;overflow:auto;height:100%;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:#e6e6e6;background:#0d1117;white-space:pre-wrap;word-wrap:break-word;user-select:text;-webkit-user-select:text;"><code>${escapedCode}</code></pre>
+                        </div>`;
+                } else if (f.subType === 'image') {
+                    bodyContent = `<div style="display:flex;align-items:center;justify-content:center;height:100%;"><img src="${f.content}" style="max-height:100%;max-width:100%;border-radius:12px;object-fit:contain;"></div>`;
+                } else {
+                    bodyContent = `<div style="display:flex;align-items:center;justify-content:center;height:100%;"><a href="${f.content}" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt"></i> Open Resource</a></div>`;
+                }
+
+                const result = this.create({
+                    title: f.name,
+                    icon: f.type === 'code' ? 'fas fa-code' : f.subType === 'image' ? 'fas fa-image' : 'fas fa-file-alt',
+                    content: bodyContent,
+                    width: 750, height: 520,
+                    noPadding: false
+                });
+
+                const winData = this.windows.find(w => w.id === result.id);
+                if (winData) winData._fileId = fileId;
+            },
+
+            _winCopyCode(btn) {
+                const pre = btn.closest('.os-win-body').querySelector('pre');
+                if (!pre) return;
+                const text = pre.textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        const orig = btn.innerHTML;
+                        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        btn.style.background = 'hsl(150,70%,40%)'; btn.style.color = '#fff'; btn.style.borderColor = 'hsl(150,70%,40%)';
+                        setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+                        showToast('Code copied!', 'success');
+                    }).catch(() => showToast('Copy failed', 'error'));
+                } else { fallbackCopy(text, btn, 'Copied!'); }
+            },
+
+            _winEditCode(btn, fileId) {
+                const f = appState.files.find(x => x.id == fileId);
+                if (!f) return;
+                const body = btn.closest('.os-win-body');
+                const pre = body.querySelector('pre');
+                if (!pre) return;
+
+                const isEditing = btn.dataset.editing === 'true';
+                if (!isEditing) {
+                    const textarea = document.createElement('textarea');
+                    textarea.className = 'win-code-editor';
+                    textarea.value = f.content;
+                    textarea.style.cssText = 'width:100%;height:100%;background:#0d1117;color:#e6e6e6;border:none;padding:16px;font-family:"JetBrains Mono",monospace;font-size:13px;line-height:1.6;resize:none;outline:none;border-radius:12px;';
+                    const codeViewer = body.querySelector('.code-viewer');
+                    codeViewer.innerHTML = '';
+                    codeViewer.appendChild(textarea);
+                    btn.innerHTML = '<i class="fas fa-save"></i> <span class="btn-label">Save</span>';
+                    btn.style.background = 'hsl(38,92%,40%)'; btn.style.color = '#fff'; btn.style.borderColor = 'hsl(38,92%,40%)';
+                    btn.dataset.editing = 'true';
+                    textarea.focus();
+                } else {
+                    const textarea = body.querySelector('textarea.win-code-editor');
+                    if (textarea) {
+                        f.content = textarea.value;
+                        saveData();
+                        const escaped = f.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const codeViewer = body.querySelector('.code-viewer');
+                        codeViewer.innerHTML = `<pre style="margin:0;padding:16px;overflow:auto;height:100%;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;color:#e6e6e6;background:#0d1117;white-space:pre-wrap;word-wrap:break-word;user-select:text;-webkit-user-select:text;"><code>${escaped}</code></pre>`;
+                    }
+                    btn.innerHTML = '<i class="fas fa-edit"></i> <span class="btn-label">Edit</span>';
+                    btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = '';
+                    btn.dataset.editing = 'false';
+                    showToast('File saved!', 'success');
+                }
+            },
+
+            _winRunCode(fileId) {
+                const f = appState.files.find(x => x.id == fileId);
+                if (!f) return;
+                if (!['html','javascript','css'].includes(f.lang?.toLowerCase())) return showToast("Code type not executable.", "error");
+                document.getElementById('live-env').style.display = 'flex';
+                const content = f.lang === 'html' ? f.content : `<script>${f.content}<\/script>`;
+                [document.getElementById('frame-desktop'), document.getElementById('frame-mobile')].forEach(fr => { const doc = fr.contentWindow.document; doc.open(); doc.write(content); doc.close(); });
+            }
+        };
+
+
+        /* ════════════════════════════════════════════════════════
+           DRAG & DROP FILE UPLOAD
+           ════════════════════════════════════════════════════════ */
+
+        const DragDropManager = {
+            _counter: 0,
+
+            init() {
+                const body = document.body;
+                const overlay = document.getElementById('drag-drop-overlay');
+
+                body.addEventListener('dragenter', (e) => {
+                    e.preventDefault();
+                    if (!appState.user || appState.currentFolderId === 'root') return;
+                    this._counter++;
+                    overlay.classList.add('active');
+                });
+
+                body.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    this._counter--;
+                    if (this._counter <= 0) {
+                        this._counter = 0;
+                        overlay.classList.remove('active');
+                    }
+                });
+
+                body.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'copy';
+                });
+
+                body.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this._counter = 0;
+                    overlay.classList.remove('active');
+
+                    if (!appState.user) return showToast('Please log in first.', 'error');
+                    if (appState.currentFolderId === 'root') return showToast('Cannot upload to Dashboard. Open a folder first.', 'error');
+
+                    const files = e.dataTransfer.files;
+                    if (!files || files.length === 0) return;
+
+                    this._processFiles(files);
+                });
+            },
+
+            _processFiles(files) {
+                let processed = 0;
+                const total = files.length;
+
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+
+                    reader.onload = (ev) => {
+                        const isImage = file.type.startsWith('image/');
+                        const isCode = this._isCodeFile(file.name);
+                        const isText = file.type.startsWith('text/') || isCode;
+
+                        let type = 'file', subType = 'file', lang = null, content = ev.target.result;
+
+                        if (isImage) {
+                            subType = 'image';
+                        } else if (isCode || isText) {
+                            type = 'code';
+                            lang = this._detectLang(file.name);
+                        }
+
+                        appState.files.push({
+                            id: Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                            folderId: appState.currentFolderId,
+                            name: file.name,
+                            type: type,
+                            subType: subType,
+                            lang: lang,
+                            content: content,
+                            owner: appState.viewingAs,
+                            size: file.size,
+                            uploadedAt: new Date().toISOString()
+                        });
+
+                        processed++;
+                        if (processed === total) {
+                            saveData();
+                            renderFiles();
+                            showToast(`${total} file${total > 1 ? 's' : ''} uploaded successfully!`, 'success');
+                        }
+                    };
+
+                    reader.onerror = () => {
+                        processed++;
+                        showToast(`Failed to read ${file.name}`, 'error');
+                    };
+
+                    if (file.type.startsWith('image/') || (!file.type.startsWith('text/') && !this._isCodeFile(file.name))) {
+                        reader.readAsDataURL(file);
+                    } else {
+                        reader.readAsText(file);
+                    }
+                });
+            },
+
+            _isCodeFile(name) {
+                const exts = ['.js','.ts','.html','.css','.py','.java','.c','.cpp','.h','.hpp','.cs','.go','.rs','.php','.rb','.swift','.kt','.sql','.sh','.bash','.json','.yaml','.yml','.xml','.md','.jsx','.tsx','.vue','.svelte','.dockerfile','.toml','.ini','.cfg','.env','.gitignore','.txt','.log'];
+                const lower = name.toLowerCase();
+                return exts.some(ext => lower.endsWith(ext));
+            },
+
+            _detectLang(name) {
+                const ext = name.split('.').pop().toLowerCase();
+                const map = {
+                    'js':'javascript','jsx':'javascript','ts':'typescript','tsx':'typescript',
+                    'html':'html','htm':'html','css':'css','py':'python','java':'java',
+                    'c':'c_cpp','cpp':'c_cpp','h':'c_cpp','hpp':'c_cpp','cs':'csharp',
+                    'go':'golang','rs':'rust','php':'php','rb':'ruby','swift':'swift',
+                    'kt':'kotlin','sql':'sql','sh':'sh','bash':'sh','json':'json',
+                    'yaml':'yaml','yml':'yaml','xml':'xml','md':'markdown',
+                    'vue':'html','svelte':'html','txt':'text','log':'text'
+                };
+                return map[ext] || 'text';
+            }
+        };
+
+
+        /* ════════════════════════════════════════════════════════
+           BULK SELECT & DELETE
+           ════════════════════════════════════════════════════════ */
+
+        let bulkMode = false;
+        let bulkSelected = new Set();
+
+        function toggleBulkMode() {
+            if (appState.currentFolderId === 'root') return showToast('Bulk select is not available on Dashboard.', 'info');
+            bulkMode = !bulkMode;
+            const btn = document.getElementById('btn-bulk-toggle');
+            if (bulkMode) {
+                document.body.classList.add('bulk-mode');
+                btn.classList.add('active');
+                bulkSelected.clear();
+                _updateBulkBar();
+                renderFiles();
+            } else {
+                exitBulkMode();
+            }
+        }
+
+        function exitBulkMode() {
+            bulkMode = false;
+            bulkSelected.clear();
+            document.body.classList.remove('bulk-mode');
+            const btn = document.getElementById('btn-bulk-toggle');
+            if (btn) btn.classList.remove('active');
+            document.querySelectorAll('.file-card.bulk-selected').forEach(c => c.classList.remove('bulk-selected'));
+            _updateBulkBar();
+            renderFiles();
+        }
+
+        function _toggleBulkItem(id, cardEl, e) {
+            if (e) e.stopPropagation();
+            if (bulkSelected.has(id)) {
+                bulkSelected.delete(id);
+                cardEl.classList.remove('bulk-selected');
+            } else {
+                bulkSelected.add(id);
+                cardEl.classList.add('bulk-selected');
+            }
+            _updateBulkBar();
+        }
+
+        function bulkSelectAll() {
+            const container = document.getElementById('file-grid-container');
+            container.querySelectorAll('.file-card').forEach(card => {
+                const itemId = card.dataset.itemId;
+                if (itemId) {
+                    bulkSelected.add(itemId);
+                    card.classList.add('bulk-selected');
+                }
+            });
+            _updateBulkBar();
+        }
+
+        function bulkDeselectAll() {
+            bulkSelected.clear();
+            document.querySelectorAll('.file-card.bulk-selected').forEach(c => c.classList.remove('bulk-selected'));
+            _updateBulkBar();
+        }
+
+        function bulkDeleteSelected() {
+            if (bulkSelected.size === 0) return showToast('No items selected.', 'error');
+            const count = bulkSelected.size;
+            showConfirm(`Delete ${count} selected item${count > 1 ? 's' : ''}? This cannot be undone.`, () => {
+                bulkSelected.forEach(id => {
+                    appState.folders = appState.folders.filter(f => f.id != id);
+                    appState.files = appState.files.filter(f => f.id != id);
+                    // Also delete nested files if it's a folder
+                    appState.files = appState.files.filter(f => f.folderId != id);
+                });
+                saveData();
+                exitBulkMode();
+                renderFiles();
+                renderSidebar();
+                showToast(`${count} item${count > 1 ? 's' : ''} deleted.`, 'success');
+            });
+        }
+
+        function _updateBulkBar() {
+            const bar = document.getElementById('bulk-action-bar');
+            const badge = document.getElementById('bulk-count-badge');
+            if (!bar) return;
+
+            if (bulkMode && window.innerWidth > 768) {
+                const headerContainer = document.getElementById('page-title-container');
+                if (headerContainer && bar.parentElement !== headerContainer) {
+                    headerContainer.appendChild(bar);
+                }
+            } else {
+                if (bar.parentElement !== document.body) {
+                    document.body.appendChild(bar);
+                }
+            }
+
+            if (bulkMode && bulkSelected.size > 0) {
+                bar.classList.add('visible');
+                badge.textContent = bulkSelected.size + ' selected';
+            } else if (bulkMode) {
+                bar.classList.add('visible');
+                badge.textContent = '0 selected';
+            } else {
+                bar.classList.remove('visible');
+            }
+        }
+
+        function _updateBulkToggleVisibility() {
+            const btn = document.getElementById('btn-bulk-toggle');
+            if (!btn) return;
+            const isDashboard = appState.currentFolderId === 'root';
+            if (isDashboard) {
+                btn.classList.remove('has-items');
+                if (bulkMode) exitBulkMode();
+            } else {
+                btn.classList.add('has-items');
+            }
+        }
+
+
+        /* ════════════════════════════════════════════════════════
+           PATCH: renderFiles — integrate bulk select checkboxes
+           ════════════════════════════════════════════════════════ */
+
+        const _originalRenderFiles = renderFiles;
+        renderFiles = function() {
+            _originalRenderFiles();
+
+            _updateBulkToggleVisibility();
+
+            // Add bulk checkboxes and data-item-id to all file cards
+            const container = document.getElementById('file-grid-container');
+            const cards = container.querySelectorAll('.file-card');
+
+            // Get subfolders and files to map IDs
+            const isDashboard = appState.currentFolderId === 'root';
+            let subfolders = isDashboard
+                ? appState.folders.filter(f => f.pinned && f.owner === appState.viewingAs)
+                : appState.folders.filter(f => f.parentId === appState.currentFolderId && f.owner === appState.viewingAs);
+            let filesHere = isDashboard
+                ? appState.files.filter(f => f.pinned && f.owner === appState.viewingAs)
+                : appState.files.filter(f => f.folderId === appState.currentFolderId && f.owner === appState.viewingAs);
+
+            const allItems = [...subfolders, ...filesHere];
+            cards.forEach((card, idx) => {
+                if (allItems[idx]) {
+                    const item = allItems[idx];
+                    card.dataset.itemId = item.id;
+
+                    // Add bulk checkbox
+                    if (!card.querySelector('.bulk-checkbox')) {
+                        const cb = document.createElement('div');
+                        cb.className = 'bulk-checkbox';
+                        cb.innerHTML = '<i class="fas fa-check"></i>';
+                        cb.onclick = (e) => {
+                            e.stopPropagation();
+                            if (bulkMode) _toggleBulkItem(item.id, card, e);
+                        };
+                        card.appendChild(cb);
+                    }
+
+                    // In bulk mode, override click to toggle selection
+                    if (bulkMode) {
+                        card.onclick = (e) => {
+                            _toggleBulkItem(item.id, card, e);
+                        };
+                        if (bulkSelected.has(item.id)) card.classList.add('bulk-selected');
+                    }
+                }
+            });
+        };
+
+
+        /* ════════════════════════════════════════════════════════
+           PATCH: openFile — open in window instead of modal
+           ════════════════════════════════════════════════════════ */
+
+        const _originalOpenFile = openFile;
+        openFile = function(id) {
+            if (bulkMode) return; // don't open files in bulk mode
+            WinManager.openFileViewer(id);
+        };
+
+
+        /* ════════════════════════════════════════════════════════
+           INITIALIZE NEW SYSTEMS ON APP LOAD
+           ════════════════════════════════════════════════════════ */
+
+        // Initialize drag-drop once DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                DragDropManager.init();
+                window.addEventListener('resize', () => {
+                    WinManager.checkTaskbarScroll();
+                    _updateBulkBar();
+                });
+            });
+        } else {
+            DragDropManager.init();
+            window.addEventListener('resize', () => {
+                WinManager.checkTaskbarScroll();
+                _updateBulkBar();
             });
         }
 
